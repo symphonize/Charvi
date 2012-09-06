@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
+gem 'pg', '0.14.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -19,7 +20,6 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'rspec-rails',      ">= 2.0.0.beta"
   gem "capybara"
 end
