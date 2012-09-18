@@ -11,7 +11,9 @@
     <%= render 'layouts/header' %>
     <div class="container">
     	<div class="row">
-	    	<%= render 'layouts/sidemenu' %>
+    		<% if signed_in? %>
+	    		<%= render 'layouts/sidemenu' %>
+    		<% end %>
 		    <div class="span10">
 		    	<% flash.each do |key, value| %>
 		        	<div class="alert alert-<%= key %>"><%= value %></div>
