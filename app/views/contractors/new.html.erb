@@ -12,9 +12,6 @@
       <%= f.label :name %>
       <%= f.text_field :name %>
 
-      <%= f.label :contact %>
-      <%= f.text_field :contact %>
-
       <%= f.label :address1 %>
       <%= f.text_field :address1 %>
 
@@ -38,10 +35,7 @@
       
       <%= f.label :fax %>
       <%= f.text_field :fax %>
-      
-      <%= f.label :website %>
-      <%= f.text_field :website %>
-      
+            
       <%= f.submit "Add", class: "btn btn-primary" %>
       <%= link_to "View all contractor", contractors_path,  class: "btn" %>
     <% end %>
