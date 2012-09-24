@@ -14,14 +14,14 @@
 <table class="table table-hover table-bordered" style="width:800px;">
 	<tr>
 		<th>Name</th>		
-		<th>Contact</th>
+		<th>Phone</th>
 		<th>Email</th>
 		<th></th>
 	</tr>
   	<% @contractors.each do |contractor| %>
   	<tr>
   		<td><%= contractor.name %></td>
-  		<td><%= contractor.contact %></td>
+  		<td><%= contractor.phone %></td>
   		<td><%= contractor.email %></td>
   		<td>
   			<%= link_to raw("<i class='icon-eye-open'></i> View"), contractor%> | 
