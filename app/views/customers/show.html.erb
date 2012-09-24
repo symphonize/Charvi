@@ -1,0 +1,73 @@
+<p>
+	<div class="btn-group">
+	  <a class="btn btn-primary" href="#"><i class="icon-edit icon-white"></i> <%= @customer.name %></a>
+	  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+	  <ul class="dropdown-menu">
+	    <li><%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_customer_path(id: @customer.id)%></li>    
+	    <li class="divider"></li>
+	    <li><%= link_to "Add new customer", new_customer_path %>    	
+		<li><%= link_to "View all customers", customers_path %>
+	  </ul>
+	</div>	
+</p>
+   
+<table class="table table-hover table-bordered" style="width:600px;">	
+	<tr>
+		<td ><strong class="pull-right">Company:</strong></td>
+		<td><%= @customer.company.name %></td>
+	</tr>
+	<tr>
+		<td ><strong class="pull-right">Name:</strong></td>
+		<td><%= @customer.name %></td>
+	</tr>
+	
+	<tr>  		
+		<td><strong class="pull-right">Contact:</strong></td>
+		<td><%= @customer.contact %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Address1:</strong></td>
+		<td><%= @customer.address1 %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Address2:</strong></td>
+		<td><%= @customer.address2 %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">City:</strong></td>
+		<td><%= @customer.city %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">State:</strong></td>
+		<td><%= @customer.state %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Zip:</strong></td>
+		<td><%= @customer.zip %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Email:</strong></td>
+		<td><%= @customer.email %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Phone:</strong></td>
+		<td><%= @customer.phone %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Fax:</strong></td>
+		<td><%= @customer.fax %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Website:</strong></td>
+		<td><%= @customer.website %></td>
+	</tr>  		  		
+</table>

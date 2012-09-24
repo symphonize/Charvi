@@ -20,6 +20,7 @@
 
 class Company < ActiveRecord::Base
   attr_accessible :address1, :address2, :city, :contact, :email, :fax, :name, :phone, :state, :website, :zip
+  has_many :customers, dependent: :destroy
 
   before_save { |company| company.email = email.downcase }
   

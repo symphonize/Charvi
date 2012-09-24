@@ -1,0 +1,35 @@
+<% provide(:title, 'Customers') %>
+<h3>Customers</h3>
+
+
+<%=@live%>
+<p>
+	<%= form_for :customer, :url => { :action => "select_company" } do |f| %>
+		<%= link_to "Add new customer", new_customer_path, class: "btn btn-primary" %>
+  		<%= select_tag 'company', options_from_collection_for_select(Company.all, :id, :name, @company_id),
+  		{onchange:  "this.form.submit();", class: "btn span5"} %>	
+  	<% end %>
+</p>
+
+<table class="table table-hover table-bordered" style="width:800px;">
+	<tr>
+		<th>Name</th>		
+		<th>Contact</th>
+		<th>Email</th>
+		<th></th>
+	</tr>
+  	<% @customers.each do |customer| %>
+  	<tr>
+  		<td><%= customer.name %></td>
+  		<td><%= customer.contact %></td>
+  		<td><%= customer.email %></td>
+  		<td>
+  			<%= link_to raw("<i class='icon-eye-open'></i> View"), customer%> | 
+  			<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_customer_path(id: customer.id)%> 
+  			
+		</td>
+  	</tr>
+  <% end %>
+</table>
+  
+
