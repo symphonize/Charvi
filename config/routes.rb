@@ -3,12 +3,14 @@ Charvi::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :companies
   resources :customers
+  resources :contractors
   
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
   
   match '/customers/filter', to: 'customers#select_company'
+  match '/contractors/filter', to: 'contractors#select_company'
 
   root to: 'static_pages#home'
   
