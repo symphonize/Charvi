@@ -1,0 +1,73 @@
+<p>
+	<div class="btn-group">
+	  <a class="btn btn-primary" href="#"><i class="icon-edit icon-white"></i> <%= @contractor.name %></a>
+	  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+	  <ul class="dropdown-menu">
+	    <li><%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_contractor_path(id: @contractor.id)%></li>    
+	    <li class="divider"></li>
+	    <li><%= link_to "Add new contractor", new_contractor_path %>    	
+		<li><%= link_to "View all contractors", contractors_path %>
+	  </ul>
+	</div>	
+</p>
+   
+<table class="table table-hover table-bordered" style="width:600px;">	
+	<tr>
+		<td ><strong class="pull-right">Company:</strong></td>
+		<td><%= @contractor.company.name %></td>
+	</tr>
+	<tr>
+		<td ><strong class="pull-right">Name:</strong></td>
+		<td><%= @contractor.name %></td>
+	</tr>
+	
+	<tr>  		
+		<td><strong class="pull-right">Contact:</strong></td>
+		<td><%= @contractor.contact %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Address1:</strong></td>
+		<td><%= @contractor.address1 %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Address2:</strong></td>
+		<td><%= @contractor.address2 %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">City:</strong></td>
+		<td><%= @contractor.city %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">State:</strong></td>
+		<td><%= @contractor.state %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Zip:</strong></td>
+		<td><%= @contractor.zip %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Email:</strong></td>
+		<td><%= @contractor.email %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Phone:</strong></td>
+		<td><%= @contractor.phone %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Fax:</strong></td>
+		<td><%= @contractor.fax %></td>
+	</tr>
+	
+	<tr>
+		<td><strong class="pull-right">Website:</strong></td>
+		<td><%= @contractor.website %></td>
+	</tr>  		  		
+</table>
