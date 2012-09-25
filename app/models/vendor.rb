@@ -1,7 +1,9 @@
 class Vendor < ActiveRecord::Base
-  attr_accessible :address1, :address2, :city, :company_id, :contact, :email, :fax, :name, :phone, :state, :website, :zip
+  attr_accessible :address1, :address2, :city, :company_id, :contact, :email, :fax, :name, :phone, :state, :website, :zip, :user_id
 
 belongs_to :company
+belongs_to :user
+
   before_save { |vendor| vendor.email = email.downcase }
 
   validates :company_id, presence: true

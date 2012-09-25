@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120924194152) do
+ActiveRecord::Schema.define(:version => 20120925081142) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -25,8 +25,9 @@ ActiveRecord::Schema.define(:version => 20120924194152) do
     t.string   "phone"
     t.string   "fax"
     t.string   "contact"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "user_id",    :default => 1
   end
 
   create_table "contractors", :force => true do |t|
@@ -40,8 +41,9 @@ ActiveRecord::Schema.define(:version => 20120924194152) do
     t.string   "phone"
     t.string   "fax"
     t.integer  "company_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "user_id",    :default => 1
   end
 
   add_index "contractors", ["company_id"], :name => "index_contractors_on_company_id"
@@ -59,8 +61,9 @@ ActiveRecord::Schema.define(:version => 20120924194152) do
     t.string   "fax"
     t.string   "contact"
     t.integer  "company_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "user_id",    :default => 1
   end
 
   add_index "customers", ["company_id"], :name => "index_customers_on_company_id"
@@ -90,8 +93,9 @@ ActiveRecord::Schema.define(:version => 20120924194152) do
     t.string   "website"
     t.string   "contact"
     t.integer  "company_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "user_id",    :default => 1
   end
 
   add_index "vendors", ["company_id"], :name => "index_vendors_on_company_id"

@@ -1,15 +1,15 @@
 class CompaniesController < ApplicationController
   before_filter :signed_in_user
   def index
-    @companies = Company.all  
+    @companies = current_user.companies.all  
   end
   
   def show
-    @company = Company.find(params[:id])
+    @company = current_user.companies.find(params[:id])
   end
   
   def edit
-    @company = Company.find(params[:id])
+    @company = current_user.companies.find(params[:id])
   end
 
   def new
@@ -18,6 +18,7 @@ class CompaniesController < ApplicationController
   
   def create
     @company = Company.new(params[:company])
+    @company.user_id = current_user.id
     if @company.save
       flash[:success] = "New company successfully added."
       redirect_to @company
@@ -27,7 +28,8 @@ class CompaniesController < ApplicationController
   end
   
   def update
-    @company = Company.find(params[:id])
+    @company = current_user.companies.find(params[:id])
+    @company.user_id = current_user.id
     if @company.update_attributes(params[:company])
       flash.now[:success] = "Company updated"
       render 'show'
@@ -35,6 +37,4 @@ class CompaniesController < ApplicationController
       render 'edit'
     end
   end
-  
-  
 end

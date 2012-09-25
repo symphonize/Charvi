@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
 gem 'pg', '0.14.1'
-gem 'bootstrap-sass', '~>2.1.0.0'
+gem 'bootstrap-sass'
 gem 'bcrypt-ruby'
-gem 'will_paginate', '3.0.3'
-gem 'bootstrap-will_paginate', '0.0.6'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

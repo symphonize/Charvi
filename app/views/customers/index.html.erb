@@ -1,12 +1,9 @@
 <% provide(:title, 'Customers') %>
 <h3>Customers</h3>
-
-
-<%=@live%>
 <p>
 	<%= form_for :customer, :url => { :action => "select_company" } do |f| %>
 		<%= link_to "Add new customer", new_customer_path, class: "btn btn-primary" %>
-  		<%= select_tag 'company', options_from_collection_for_select(Company.all, :id, :name, @company_id),
+  		<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
   		{onchange:  "this.form.submit();", class: "btn span5"} %>	
   	<% end %>
 </p>

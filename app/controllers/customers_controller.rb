@@ -2,30 +2,64 @@ class CustomersController < ApplicationController
   before_filter :signed_in_user
   
   def index    
-    @company_id = Company.first.id      
-    @customers = Customer.where(company_id: @company_id)      
+    if user_companies != [] 
+      @company_id = user_companies.first.id      
+      @customers = Customer.where(company_id: @company_id)
+    else
+        @company_id =nil
+        @customers = []
+    end        
   end
   
   def select_company
     @company_id = params[:company]
-    @customers = Customer.where(company_id: @company_id)
+    if Company.where(id: @company_id, user_id: current_user.id) != []
+      @customers = Customer.where(company_id: @company_id)      
+    else
+        @company_id =nil
+        @customers = []
+    end    
     render 'index'
   end
   
   def show
-    @customer = Customer.find(params[:id])
+    if user_companies != []
+      @customer = current_user.customers.find_by_id(params[:id])
+      if @customer == nil
+        flash[:warning] = ACCESS_FAILURE_WARNING
+        redirect_to action:'index'  
+      end   
+    else
+      flash[:warning] = ACCESS_FAILURE_WARNING
+      redirect_to action:'index'
+    end 
   end
   
   def edit
-    @customer = Customer.find(params[:id])
+    if user_companies != []
+      @customer = current_user.customers.find_by_id(params[:id])
+      if @customer == nil
+        flash[:warning] = ACCESS_FAILURE_WARNING
+        redirect_to action:'index'      
+      end           
+    else
+      flash[:warning] = ACCESS_FAILURE_WARNING
+      redirect_to action:'index'
+    end    
   end
 
   def new
-    @customer = Customer.new
+    if(user_companies == [])
+      flash[:warning] = NO_COMPANIES_WARNING
+      redirect_to action:'index'
+    else
+      @customer = Customer.new
+    end
   end
   
   def create
     @customer = Customer.new(params[:customer])
+    @customer.user_id = current_user.id    
     if @customer.save
       flash[:success] = "New customer successfully added."
       redirect_to @customer
@@ -36,6 +70,7 @@ class CustomersController < ApplicationController
   
   def update
     @customer = Customer.find(params[:id])
+    @customer.user_id = current_user.id
     if @customer.update_attributes(params[:customer])
       flash.now[:success] = "Customer updated"
       render 'show'

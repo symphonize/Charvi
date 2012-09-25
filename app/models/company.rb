@@ -14,12 +14,16 @@
 #  phone    :string(255)
 #  fax      :string(255)
 #  contact  :string(255)
+#  company_id      :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
 
 class Company < ActiveRecord::Base
-  attr_accessible :address1, :address2, :city, :contact, :email, :fax, :name, :phone, :state, :website, :zip
+  attr_accessible :address1, :address2, :city, :contact, :email, :fax, :name, :phone, :state, :website, :zip, :user_id
+  
+  belongs_to :user
+  
   has_many :customers, dependent: :destroy
   has_many :contractors, dependent: :destroy
   has_many :vendors, dependent: :destroy
@@ -33,5 +37,6 @@ class Company < ActiveRecord::Base
   validates  :email, presence: true, length: {maximum: 320}, format: { with: VALID_EMAIL_REGEX }
   validates  :phone, presence: true, length: {maximum: 10}
   validates  :contact, presence: true, length: {maximum: 75}
+  validates :user_id, presence: true
   
 end

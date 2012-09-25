@@ -20,6 +20,11 @@ module SessionsHelper
     user == current_user
   end
   
+  def user_companies
+    @user_companies = current_user.companies.all
+  end
+  
+  
   def redirect_back_or(default)
     redirect_to(session[:return_to] || default)
     session.delete(:return_to)

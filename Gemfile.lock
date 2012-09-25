@@ -158,8 +158,8 @@ PLATFORMS
 DEPENDENCIES
   annotate
   bcrypt-ruby
-  bootstrap-sass (~> 2.1.0.0)
-  bootstrap-will_paginate (= 0.0.6)
+  bootstrap-sass
+  bootstrap-will_paginate
   capybara
   coffee-rails (~> 3.2.1)
   guard-rspec
@@ -172,4 +172,4 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   spork
   uglifier (>= 1.0.3)
-  will_paginate (= 3.0.3)
+  will_paginate

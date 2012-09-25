@@ -7,7 +7,7 @@
 	  <%= render 'shared/error_messages', object: @customer %>
 	  
 	  <%= f.label :company %>
-      <%= collection_select :customer, :company_id, Company.all, :id, :name, {}, {class: "btn"} %>
+      <%= collection_select :customer, :company_id, user_companies, :id, :name, {}, {class: "btn"} %>
 	
       <%= f.label :name %>
       <%= f.text_field :name %>
