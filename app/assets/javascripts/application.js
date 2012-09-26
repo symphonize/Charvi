@@ -15,4 +15,7 @@
 //= require bootstrap
 //= require_tree .
 
-$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+$('.nav .dropdown-menu').hide();  
+$('.nav .dropdown-toggle').on('click', function() {
+  $('.nav .dropdown-menu').toggle();
+});

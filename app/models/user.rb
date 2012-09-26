@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :customers, through: :companies
   has_many :contractors, through: :companies
   has_many :vendors, through: :companies
+  has_many :projects, through: :companies
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
