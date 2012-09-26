@@ -15,15 +15,14 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
   has_many :companies, dependent: :destroy
-  has_many :customers, dependent: :destroy
-  has_many :contractors, dependent: :destroy
-  has_many :vendors, dependent: :destroy
+  has_many :customers, through: :companies
+  has_many :contractors, through: :companies
+  has_many :vendors, through: :companies
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
   
   validates :name, presence: true, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence:   true,
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }

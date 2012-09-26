@@ -1,8 +1,7 @@
 class Contractor < ActiveRecord::Base
-  attr_accessible :address1, :address2, :city, :company_id, :email, :fax, :name, :phone, :state, :zip, :user_id
+  attr_accessible :address1, :address2, :city, :company_id, :email, :fax, :name, :phone, :state, :zip
 
-  belongs_to :company
-  belongs_to :user
+  belongs_to :company  
   before_save { |contractor| contractor.email = email.downcase }
 
   validates :company_id, presence: true  

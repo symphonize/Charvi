@@ -20,7 +20,7 @@
 #
 
 class Company < ActiveRecord::Base
-  attr_accessible :address1, :address2, :city, :contact, :email, :fax, :name, :phone, :state, :website, :zip, :user_id
+  attr_accessible :address1, :address2, :city, :contact, :email, :fax, :name, :phone, :state, :website, :zip
   
   belongs_to :user
   

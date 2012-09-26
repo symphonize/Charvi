@@ -58,19 +58,22 @@ class VendorsController < ApplicationController
   end
   
   def create
-    @vendor = Vendor.new(params[:vendor])
-    @vendor.user_id = current_user.id
-    if @vendor.save
-      flash[:success] = "New vendor successfully added."
-      redirect_to @vendor
+    @vendor = Vendor.new(params[:vendor])  
+    if Company.where(id: @vendor.company_id, user_id: current_user.id) != []  
+      if @vendor.save
+        flash[:success] = "New vendor successfully added."
+        redirect_to @vendor
+      else
+        render 'new'
+      end
     else
-      render 'new'
+      flash[:warning] = ACCESS_FAILURE_WARNING
+      redirect_to action:'index'
     end
   end
   
   def update
-    @vendor = Vendor.find(params[:id])
-    @vendor.user_id = current_user.id
+    @vendor = current_user.vendors.find(params[:id])    
     if @vendor.update_attributes(params[:vendor])
       flash.now[:success] = "Vendor updated"
       render 'show'

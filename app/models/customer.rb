@@ -1,7 +1,6 @@
 class Customer < ActiveRecord::Base
-  attr_accessible :address1, :address2, :city, :company_id, :contact, :email, :fax, :name, :phone, :state, :website, :zip, :user_id
-  belongs_to :company
-  belongs_to :user
+  attr_accessible :address1, :address2, :city, :company_id, :contact, :email, :fax, :name, :phone, :state, :website, :zip
+  belongs_to :company  
   
   before_save { |customer| customer.email = email.downcase }
 

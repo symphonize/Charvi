@@ -58,19 +58,22 @@ class ContractorsController < ApplicationController
   end
   
   def create
-    @contractor = Contractor.new(params[:contractor])
-    @contractor.user_id = current_user.id
-    if @contractor.save
-      flash[:success] = "New contractor successfully added."
-      redirect_to @contractor
+    @contractor = Contractor.new(params[:contractor])    
+    if Company.where(id: @contractor.company_id, user_id: current_user.id) != []
+      if @contractor.save
+        flash[:success] = "New contractor successfully added."
+        redirect_to @contractor
+      else
+        render 'new'
+      end
     else
-      render 'new'
+      flash[:warning] = ACCESS_FAILURE_WARNING
+      redirect_to action:'index'
     end
   end
   
   def update
-    @contractor = Contractor.find(params[:id])
-    @contractor.user_id = current_user.id
+    @contractor = current_user.contractors.find(params[:id])    
     if @contractor.update_attributes(params[:contractor])
       flash.now[:success] = "Contractor updated"
       render 'show'

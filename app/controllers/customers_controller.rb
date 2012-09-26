@@ -59,18 +59,21 @@ class CustomersController < ApplicationController
   
   def create
     @customer = Customer.new(params[:customer])
-    @customer.user_id = current_user.id    
-    if @customer.save
-      flash[:success] = "New customer successfully added."
-      redirect_to @customer
+    if Company.where(id: @customer.company_id, user_id: current_user.id) != []        
+      if @customer.save
+        flash[:success] = "New customer successfully added."
+        redirect_to @customer
+      else
+        render 'new'
+      end
     else
-      render 'new'
-    end
+      flash[:warning] = ACCESS_FAILURE_WARNING
+      redirect_to action:'index'
+    end 
   end
   
   def update
-    @customer = Customer.find(params[:id])
-    @customer.user_id = current_user.id
+    @customer = current_user.customers.find(params[:id])    
     if @customer.update_attributes(params[:customer])
       flash.now[:success] = "Customer updated"
       render 'show'
