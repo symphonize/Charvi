@@ -1,9 +1,10 @@
 Charvi::Application.routes.draw do  
-  resources :users, :companies, :customers, :contractors, :vendors  
+  resources :users, :companies, :customers, :contractors, :vendors, :projects  
 
   match '/customers/filter', to: 'customers#select_company'
   match '/contractors/filter', to: 'contractors#select_company'
   match '/vendors/filter', to: 'vendors#select_company'
+  match '/projects/filter', to: 'projects#select_company'
 
   resources :sessions, only: [:new, :create, :destroy]
   

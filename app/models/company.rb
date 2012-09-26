@@ -27,9 +27,11 @@ class Company < ActiveRecord::Base
   has_many :customers, dependent: :destroy
   has_many :contractors, dependent: :destroy
   has_many :vendors, dependent: :destroy
+  has_many :projects, dependent: :destroy
 
   before_save { |company| company.email = email.downcase }
   
+  validates  :name, presence: true, length: {maximum: 70}
   validates  :address1, presence: true, length: {maximum: 30}
   validates  :city, presence: true, length: {maximum: 30}
   validates  :state, presence: true, length: {maximum: 2}

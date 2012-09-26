@@ -6,6 +6,7 @@ class Contractor < ActiveRecord::Base
 
   validates :company_id, presence: true  
   
+  validates  :name, presence: true, length: {maximum: 70}
   validates  :address1, presence: true, length: {maximum: 30}
   validates  :city, presence: true, length: {maximum: 30}
   validates  :state, presence: true, length: {maximum: 2}
