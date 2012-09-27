@@ -14,12 +14,12 @@
       <div class="nav-collapse">
         <!-- .nav, .navbar-search, .navbar-form, etc -->        
 	        <ul class="nav pull-right">
-	          <li><%= link_to "HOME", root_path %></li>          
+	          <li><%= link_to "Home", root_path %></li>          
 	          <% if signed_in? %>
 	          	<li><%= link_to "TIMESHEET", '#' %></li>
 	          	<li class="dropdown">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	                INVOICES <b class="caret"></b>
+	                Invoices <b class="caret"></b>
 	              </a>
 	              <ul class="dropdown-menu">                
 	                <li><%= link_to "Process Payments", '#' %></li>
@@ -29,7 +29,7 @@
 	            </li>
 	          	<li class="dropdown">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	                PROJECTS <b class="caret"></b>
+	                Projects <b class="caret"></b>
 	              </a>
 	              <ul class="dropdown-menu">                
 	                <li><%= link_to "Resources", resources_path %></li>
@@ -39,7 +39,7 @@
 	            </li>
 	      		<li class="dropdown">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	                MASTER <b class="caret"></b>
+	                Master <b class="caret"></b>
 	              </a>
 	              <ul class="dropdown-menu">                
 	                <li><%= link_to "Customers", customers_path %></li>                
@@ -52,7 +52,7 @@
 	        	</li>
 	            <li class="dropdown">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	                ACCOUNT (<%= current_user.name%>) <b class="caret"></b>
+	                Account (<%= current_user.name%>) <b class="caret"></b>
 	              </a>
 	              <ul class="dropdown-menu">
 	                <li><%= link_to "View Profile", current_user %></li>
@@ -66,7 +66,7 @@
 	          <% else %>
 	          	<li class="dropdown">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	                SIGN IN <b class="caret"></b>
+	                Sign in <b class="caret"></b>
 	              </a>
 	              <ul class="dropdown-menu">                
 	                <li>
@@ -83,22 +83,9 @@
 	                </li>
 	              </ul>
 	        	</li>
-	          
-	          
-	          
-	          
-	          
-	          
-	          
-	          
-	          
-	          
-	          
-	            
 	          <% end %>
 	        </ul>	      
       </div> 
     </div>
-  </div>	
-  
+  </div>
 </header>
