@@ -1,0 +1,40 @@
+<% provide(:title, 'Resources') %>
+<h3>Resources</h3>
+<p>
+	<%= form_for :resource, :url => { :action => "select_company" } do |f| %>
+		<%= link_to "Add new project", new_project_path, class: "btn btn-primary" %>
+  		<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
+  		{onchange:  "this.form.submit();", class: "btn span5"} %>	
+  	<% end %>
+  	
+  	<%= form_for :resource, :url => { :action => "select_project" } do |f| %>
+		<%= select_tag 'project', options_from_collection_for_select(@projects, :id, :name, @company_id),
+  		{onchange:  "this.form.submit();", class: "btn span5"} %>	
+  	<% end %>
+  	
+</p>
+
+<table class="table table-hover table-bordered" style="width:800px;">
+	<tr>
+		<th>Project</th>
+		<th>Resource</th>		
+		<th>Billing</th>
+		<th>Rate</th>		
+		<th></th>
+	</tr>
+  	<% @resources.each do |resource| %>
+  	<tr>
+  		<td><%= resource.project.name %></td>
+  		<td></td>
+  		<td><%= resource.bliing_type %></td>
+  		<td><%= resource.billing_amount %></td>
+  		<td>
+  			<%= link_to raw("<i class='icon-eye-open'></i> View"), resource%> | 
+  			<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_resource_path(id: resource.id)%> 
+  			
+		</td>
+  	</tr>
+  <% end %>
+</table>
+  
+

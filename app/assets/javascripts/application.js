@@ -14,8 +14,3 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
-
-$('.nav .dropdown-menu').hide();  
-$('.nav .dropdown-toggle').on('click', function() {
-  $('.nav .dropdown-menu').toggle();
-});

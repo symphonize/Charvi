@@ -1,65 +1,75 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
-      <%= link_to "BYT", root_path, id: "logo" %>
-      <nav>
-        <ul class="nav pull-right">
-          <li><%= link_to "Home", root_path %></li>          
-          <% if signed_in? %>
-          	<li><%= link_to "Timesheet", '#' %></li>
-          	<li id="fat-menu" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Invoices <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">                
-                <li><%= link_to "Process Payments", '#' %></li>
-                <li class="divider"></li>
-                <li><%= link_to "Invoices", '#' %></li>
-              </ul>
-            </li>
-          	
-          	
-          	<li id="fat-menu" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Projects <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">                
-                <li><%= link_to "Resources", '#' %></li>
-                <li class="divider"></li>
-                <li><%= link_to "Projects", projects_path %></li>
-              </ul>
-            </li>
-      		<li id="fat-menu" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Master <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">                
-                <li><%= link_to "Customers", customers_path %></li>                
-                <li><%= link_to "Contractors", contractors_path %></li>
-                <li><%= link_to "Vendors", vendors_path %></li>
-                <li><%= link_to "Companies", companies_path %></li>
-                <li class="divider"></li>
-                <li><%= link_to "Users", users_path %></li>                
-              </ul>
-        	</li>
-            <li id="fat-menu" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Account (<%= current_user.name%>) <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "View Profile", current_user %></li>
-                <li><%= link_to "Settings", '#' %></li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to "Sign out", signout_path, method: "delete" %>
-                </li>
-              </ul>
-            </li>
-          <% else %>
-            <li><%= link_to "Sign in", signin_path %></li>
-          <% end %>
-        </ul>
-      </nav>
+ 	  <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <a class="btn btn-inverse pull-right" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-th-large icon-white"></span>        
+      </a>
+      <!-- Be sure to leave the brand out there if you want it shown -->
+      <%= link_to "BYT", root_path, class: "brand" %>
+ 
+      <!-- Everything you want hidden at 940px or less, place within here -->
+      <div class="nav-collapse">
+        <!-- .nav, .navbar-search, .navbar-form, etc -->
+        
+	        <ul class="nav pull-right">
+	          <li><%= link_to "Home", root_path %></li>          
+	          <% if signed_in? %>
+	          	<li><%= link_to "Timesheet", '#' %></li>
+	          	<li id="fat-menu" class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                Invoices <b class="caret"></b>
+	              </a>
+	              <ul class="dropdown-menu">                
+	                <li><%= link_to "Process Payments", '#' %></li>
+	                <li class="divider"></li>
+	                <li><%= link_to "Invoices", '#' %></li>
+	              </ul>
+	            </li>
+	          	
+	          	
+	          	<li id="fat-menu" class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                Projects <b class="caret"></b>
+	              </a>
+	              <ul class="dropdown-menu">                
+	                <li><%= link_to "Resources", resources_path %></li>
+	                <li class="divider"></li>
+	                <li><%= link_to "Projects", projects_path %></li>
+	              </ul>
+	            </li>
+	      		<li id="fat-menu" class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                Master <b class="caret"></b>
+	              </a>
+	              <ul class="dropdown-menu">                
+	                <li><%= link_to "Customers", customers_path %></li>                
+	                <li><%= link_to "Contractors", contractors_path %></li>
+	                <li><%= link_to "Vendors", vendors_path %></li>
+	                <li><%= link_to "Companies", companies_path %></li>
+	                <li class="divider"></li>
+	                <li><%= link_to "Users", users_path %></li>                
+	              </ul>
+	        	</li>
+	            <li id="fat-menu" class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                Account (<%= current_user.name%>) <b class="caret"></b>
+	              </a>
+	              <ul class="dropdown-menu">
+	                <li><%= link_to "View Profile", current_user %></li>
+	                <li><%= link_to "Settings", '#' %></li>
+	                <li class="divider"></li>
+	                <li>
+	                  <%= link_to "Sign out", signout_path, method: "delete" %>
+	                </li>
+	              </ul>
+	            </li>
+	          <% else %>
+	            <li><%= link_to "Sign in", signin_path %></li>
+	          <% end %>
+	        </ul>	      
+      </div> 
     </div>
-  </div>
+  </div>	
+  
 </header>

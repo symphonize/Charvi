@@ -3,6 +3,8 @@ class Project < ActiveRecord::Base
   belongs_to :company
   belongs_to :customer
   
+  has_many :resources
+  
   before_save { |project| project.email = email.downcase }
   
   validates :company_id, presence: true

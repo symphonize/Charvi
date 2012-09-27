@@ -1,26 +1,69 @@
-class ProjectsController < ApplicationController
- before_filter :signed_in_user
+class ResourcesController < ApplicationController
+before_filter :signed_in_user
   
   def index    
     if user_companies != [] 
-      @company_id = user_companies.first.id      
-      @projects = Project.where(company_id: @company_id)
+      @company_id = user_companies.first.id  
+      if(user_companies.first.projects != [])   
+        @project_id =  user_companies.first.projects.first.id
+        @projects = user_companies.first.projects
+        @resources = Resource.where(project_id: @project_id)
+      else
+        @project_id = nil
+        @projects = nil
+        @resources = []
+      end
+    else
+        @company_id =nil
+        @project_id = nil
+        @projects = nil
+        @resources = []
+    end        
+  end
+  
+  def select_project
+    @company_id = params[:company]
+    @project_id = params[:project]
+    if Company.where(id: @company_id, user_id: current_user.id) != []
+      if Project.where(id: @project_id, company_id: @company_id) != []
+        @projects = Project.where(company_id: @company_id)        
+        @resources = Resource.where(project_id: @project_id)
+      else
+        @company_id =nil
+        @project_id =nil
+        @projects = []
+        @resources = []
+      end
     else
         @company_id =nil
         @projects = []
-    end        
+        @project_id =nil
+        @resources = []
+    end    
+    render 'index'
   end
   
   def select_company
     @company_id = params[:company]
+    
     if Company.where(id: @company_id, user_id: current_user.id) != []
-      @projects = Project.where(company_id: @company_id)      
+      @project_id = user_companies.find(@company_id).projects.first.id
+      if Project.where(id: @project_id, company_id: @company_id) != []
+        @resources = Resource.where(project_id: @project_id)
+      else
+        @company_id =nil
+        @project_id =nil
+        @resources = []
+      end
     else
         @company_id =nil
-        @projects = []
+        @project_id =nil
+        @resources = []
     end    
     render 'index'
   end
+  
+  
   
   def show
     if user_companies != []
