@@ -1,10 +1,6 @@
 <footer class="footer">
 	<div style="padding:15px;">		
 		<p>
-		  <small>
-			BYT App by
-			<a href="http://www.symphonize.net/">Symphonize</a>	    
-		  </small>
 		  <nav>
 		    <ul>
 	    		<li><%= link_to "Help", help_path %></li>
@@ -13,6 +9,7 @@
 		      	<li><a href="http://www.symphonize.net/">News</a></li>
 		    </ul>
 		  </nav>
+		  <%= link_to image_tag("poweredbysymphonize.jpg", alt: "Symphonize", style: "width:250px;"), 'http://www.symphonize.net/' %>
 		  </p>
 	  </div>
 </footer>
