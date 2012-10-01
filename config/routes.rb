@@ -7,6 +7,9 @@ Charvi::Application.routes.draw do
   match '/projects/filter', to: 'projects#select_company'  
   match '/resources/project', to: 'resources#select_project'
   match '/resources/company', to: 'resources#select_company'
+  match '/resources/new/company', to: 'resources#select_company_new'
+  match '/resources/edit/:id/company', to: 'resources#select_company_edit'
+  
 
   resources :sessions, only: [:new, :create, :destroy]
   

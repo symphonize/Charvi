@@ -1,20 +1,29 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    function project_change(){
+    	$('input#resource_company_id').val($('#company').val());
+    	$('#select_project').submit();
+    }
+  </script>
+<% end %>
 <% provide(:title, 'Resources') %>
 <h3>Resources</h3>
-<p>
-	<%= form_for :resource, :url => { :action => "select_company" } do |f| %>
-		<%= link_to "Add new project", new_project_path, class: "btn btn-primary" %>
-  		<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
-  		{onchange:  "this.form.submit();", class: "btn span5"} %>	
-  	<% end %>
-  	
-  	<%= form_for :resource, :url => { :action => "select_project" } do |f| %>
-		<%= select_tag 'project', options_from_collection_for_select(@projects, :id, :name, @company_id),
-  		{onchange:  "this.form.submit();", class: "btn span5"} %>	
-  	<% end %>
-  	
-</p>
 
-<table class="table table-hover table-bordered" style="width:800px;">
+<%= @error %>
+<p>
+	<%= form_for :resource, :html => { :id => "select_company" }, url: { :action => "select_company" } do |f| %>
+		<%= link_to "Add new resource", new_resource_path, class: "btn btn-primary" %>
+  		<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
+  		{onchange:  "this.form.submit();", class: "btn span3"} %>
+  	<% end %>
+  	Project:
+  	<%= form_for :resource, :html => { :id => "select_project" }, url: { :action => "select_project" } do |f| %>
+		<%= select_tag 'project', options_from_collection_for_select(@projects, :id, :name, @project_id),
+  		{onchange:  "project_change();", class: "btn span3"} %>  		
+  		<%= f.hidden_field :company_id%>
+  	<% end %>  	
+</p>
+<table class="table table-hover table-bordered table-nonfluid">
 	<tr>
 		<th>Project</th>
 		<th>Resource</th>		
@@ -25,8 +34,8 @@
   	<% @resources.each do |resource| %>
   	<tr>
   		<td><%= resource.project.name %></td>
-  		<td></td>
-  		<td><%= resource.bliing_type %></td>
+  		<td><%= resource.contractor.name %></td>
+  		<td><%= resource.billing_type %></td>
   		<td><%= resource.billing_amount %></td>
   		<td>
   			<%= link_to raw("<i class='icon-eye-open'></i> View"), resource%> | 

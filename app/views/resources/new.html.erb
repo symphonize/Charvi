@@ -1,31 +1,23 @@
-<% provide(:title, 'Add new project') %>
-<h3>Add new project</h3>
-
+<% provide(:title, 'Add new resource') %>
+<h3>Add new resource</h3>
 <div class="row">
   <div class="span5">
-    <%= form_for(@project) do |f| %>
-	  <%= render 'shared/error_messages', object: @project %>
-	  
-	  <%= f.label :company %>
-      <%= collection_select :project, :company_id, user_companies, :id, :name, {}, {class: "btn"} %>
-      
-      <%= f.label :customer %>
-      <%= collection_select :project, :customer_id, @customers, :id, :name, {}, {class: "btn"} %>
-	
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-
-      <%= f.label :manager %>
-      <%= f.text_field :manager %>
-
-      <%= f.label :email %>
-      <%= f.text_field :email %>
-      
-      <%= f.label :phone %>
-      <%= f.text_field :phone %>      
-      
-      <%= f.submit "Add", class: "btn btn-primary" %>
-      <%= link_to "View all projects", projects_path,  class: "btn" %>
-    <% end %>
+  	  <%= render 'shared/error_messages', object: @resource %>
+  	  <%= form_for :company, :html => { :id => "select_new_company" }, url: { :action => "select_company_new" } do |f| %>
+	  	<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
+  			{onchange: "$('#select_new_company').submit();", class: "btn"} %>
+  	  <% end %>
+	  <%= form_for(@resource) do |g| %>	  	  
+      <%= g.label :project %>
+      <%= collection_select :resource, :project_id, @projects, :id, :name, {}, {} %>
+	  <%= g.label :contractor %>
+	  <%= collection_select :resource, :contractor_id, @contractors, :id, :name, {}, {} %>
+      <%= g.label :billing_type %>
+      <%= g.select :billing_type, billing_types %>
+      <%= g.label :billing_amount %>
+      <%= g.text_field :billing_amount %>      
+      <%= g.submit "Add", class: "btn btn-primary", html:{id: "btnSubmit"} %>
+      <%= link_to "View all resources", resources_path,  class: "btn" %>
+    <% end %>    
   </div>
 </div>

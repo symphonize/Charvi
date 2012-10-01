@@ -22,23 +22,25 @@ before_filter :signed_in_user
   end
   
   def select_project
-    @company_id = params[:company]
+    @company_id = params[:resource][:company_id]
     @project_id = params[:project]
     if Company.where(id: @company_id, user_id: current_user.id) != []
-      if Project.where(id: @project_id, company_id: @company_id) != []
-        @projects = Project.where(company_id: @company_id)        
+      if(current_user.projects.where(company_id: @company_id) != [])
+        @projects = current_user.projects.where(company_id: @company_id)
         @resources = Resource.where(project_id: @project_id)
+        @error = ""
       else
-        @company_id =nil
-        @project_id =nil
-        @projects = []
+        @projects = []        
         @resources = []
-      end
+        @project_id =nil
+        @error = "no projects"
+      end    
     else
-        @company_id =nil
         @projects = []
+        @company_id =nil
         @project_id =nil
         @resources = []
+        @error = @company_id
     end    
     render 'index'
   end
@@ -47,15 +49,17 @@ before_filter :signed_in_user
     @company_id = params[:company]
     
     if Company.where(id: @company_id, user_id: current_user.id) != []
-      @project_id = user_companies.find(@company_id).projects.first.id
-      if Project.where(id: @project_id, company_id: @company_id) != []
+      if(current_user.projects.where(company_id: @company_id) != [])
+        @projects = current_user.projects.where(company_id: @company_id)
+        @project_id = current_user.projects.where(company_id: @company_id).first.id
         @resources = Resource.where(project_id: @project_id)
       else
-        @company_id =nil
-        @project_id =nil
+        @projects = []        
         @resources = []
-      end
+        @project_id =nil
+      end    
     else
+        @projects = []
         @company_id =nil
         @project_id =nil
         @resources = []
@@ -63,15 +67,13 @@ before_filter :signed_in_user
     render 'index'
   end
   
-  
-  
   def show
-    if user_companies != []
-      @project = current_user.projects.find_by_id(params[:id])
-      if @project == nil
+    @resource = Resource.find_by_id(params[:id])
+    if(current_user.projects.where(id: @resource.project_id) != [])
+      if(current_user.contractors.where(id: @resource.contractor_id) == [])
         flash[:warning] = ACCESS_FAILURE_WARNING
-        redirect_to action:'index'  
-      end   
+        redirect_to action:'index'
+      end
     else
       flash[:warning] = ACCESS_FAILURE_WARNING
       redirect_to action:'index'
@@ -80,11 +82,23 @@ before_filter :signed_in_user
   
   def edit
     if user_companies != []
-      @project = current_user.projects.find_by_id(params[:id])
-      @customers = current_user.customers
-      if @project == nil
+      @resource = Resource.find_by_id(params[:id])
+      @company_id = Project.find(@resource.project_id).company_id
+      @projects = current_user.projects
+      @contractors = current_user.contractors
+      if Company.where(id: @company_id, user_id: current_user.id) != []
+        if(current_user.contractors.where(id: @resource.contractor_id) != [] )
+          if @resource == nil
+            flash[:warning] = ACCESS_FAILURE_WARNING
+            redirect_to action:'index'      
+          end  
+        else        
+          flash[:warning] = ACCESS_FAILURE_WARNING
+          redirect_to action:'index'
+        end
+      else
         flash[:warning] = ACCESS_FAILURE_WARNING
-        redirect_to action:'index'      
+        redirect_to action:'index'
       end           
     else
       flash[:warning] = ACCESS_FAILURE_WARNING
@@ -97,19 +111,80 @@ before_filter :signed_in_user
       flash[:warning] = NO_COMPANIES_WARNING
       redirect_to action:'index'
     else
-      @project = Project.new
-      @customers = current_user.customers
+      @company_id = user_companies.first.id
+      @resource = Resource.new
+      @projects = current_user.projects
+      @contractors = current_user.contractors
     end
   end
   
-  def create
-    @project = Project.new(params[:project])
-    if Company.where(id: @project.company_id, user_id: current_user.id) != []
-      if(current_user.customers.where(id: @project.customer_id) != [] )        
-        if @project.save
-          flash[:success] = "New project successfully added."
-          redirect_to @project
+  def select_company_new
+    @company_id = params[:company]    
+    if Company.where(id: @company_id, user_id: current_user.id) != []
+      if(current_user.projects.where(company_id: @company_id) != [])
+        @projects = current_user.projects.where(company_id: @company_id)
+        if(current_user.contractors.where(company_id: @company_id) != [])
+          @contractors = current_user.contractors.where(company_id: @company_id)
+          @resource = Resource.new
         else
+          flash.now[:warning] = NO_CONTRACTORS_WARNING
+          @resource = Resource.new
+          @contractors = []
+        end
+      else
+        flash.now[:warning] = NO_PROJECTS_WARNING
+        @projects = []
+        @resource = Resource.new
+        @contractors = []        
+      end    
+    else
+      flash.now[:warning] = NO_PROJECTS_WARNING
+      @projects = []
+      @resource = Resource.new
+      @contractors = []
+    end    
+    render 'new'
+  end
+  
+  def select_company_edit
+    @company_id = params[:company]    
+    if Company.where(id: @company_id, user_id: current_user.id) != []
+      if(current_user.projects.where(company_id: @company_id) != [])
+        @projects = current_user.projects.where(company_id: @company_id)
+        if(current_user.contractors.where(company_id: @company_id) != [])
+          @contractors = current_user.contractors.where(company_id: @company_id)
+          @resource = Resource.find_by_id(params[:id])
+        else
+          flash.now[:warning] = NO_CONTRACTORS_WARNING
+          @resource = Resource.find_by_id(params[:id])
+          @contractors = []
+        end
+      else
+        flash.now[:warning] = NO_PROJECTS_WARNING
+        @projects = []
+        @resource = Resource.find_by_id(params[:id])
+        @contractors = []        
+      end    
+    else
+      flash.now[:warning] = NO_PROJECTS_WARNING
+      @projects = []
+      @resource = Resource.find_by_id(params[:id])
+      @contractors = []
+    end    
+    render 'edit'
+  end
+  
+  def create
+    @resource = Resource.new(params[:resource])
+    @company_id = Project.find(@resource.project_id).company_id
+    if Company.where(id: @company_id, user_id: current_user.id) != []
+      if(current_user.contractors.where(id: @resource.contractor_id) != [] )        
+        if @resource.save
+          flash[:success] = "New resource successfully added."
+          redirect_to @resource
+        else
+          @projects = current_user.projects.where(company_id: @company_id)
+          @contractors = current_user.contractors.where(company_id: @company_id)
           render 'new'
         end
       else
@@ -123,13 +198,18 @@ before_filter :signed_in_user
   end
   
   def update
-    @project = current_user.projects.find(params[:id])  
-    if(current_user.customers.where(id: @project.customer_id) != [])        
-      if @project.update_attributes(params[:project])
-        flash.now[:success] = "Project updated"
-        render 'show'
+    @resource = Resource.find(params[:id])  
+    if(current_user.projects.where(id: @resource.project_id) != [])
+      if(current_user.contractors.where(id: @resource.contractor_id) != [])
+        if @resource.update_attributes(params[:resource])
+          flash.now[:success] = "Resource updated"
+          render 'show'
+        else
+          render 'edit'
+        end
       else
-        render 'edit'
+        flash[:warning] = ACCESS_FAILURE_WARNING
+        redirect_to action:'index'  
       end
     else
       flash[:warning] = ACCESS_FAILURE_WARNING
