@@ -1,4 +1,5 @@
 <% provide(:title, 'Customers') %>
+<div class="white-panel pad10">
 <h3>Customers</h3>
 <p>
 	<%= form_for :customer, :url => { :action => "select_company" } do |f| %>
@@ -28,5 +29,5 @@
   	</tr>
   <% end %>
 </table>
-  
+</div>
 
