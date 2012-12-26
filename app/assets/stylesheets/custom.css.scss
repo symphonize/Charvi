@@ -18,7 +18,8 @@ html {
 }
 
 body {
-  padding: 6px;  
+  padding: 0px;  
+  background-color:#f3f4f5;
 }
 
 section {
@@ -86,7 +87,7 @@ p {
 
 footer {
   background-color:#ffffff;
-  margin-top: 45px;
+  margin-top: 5px;
   padding-top: 5px;
   border-top: 1px solid $grayMediumLight;
   color: $grayLight;
@@ -100,6 +101,7 @@ footer {
     float: left; 
   }
   ul {
+    padding-right:15px;
     float: right;
     list-style: none;
     li {
@@ -110,6 +112,7 @@ footer {
 }
 
 .pad10{padding:10px;}
+.pad6{padding:6px;}
 
 .white-panel {
 background-color: white;
