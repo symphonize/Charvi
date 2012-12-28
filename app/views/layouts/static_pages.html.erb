@@ -10,13 +10,15 @@
     <%= yield :head%>
   </head>
   <body>  	
+  	<div class="head-float">
+  		<%= render 'layouts/header' %>
+  	</div>
   	<div id="myCarousel" class="carousel slide">
 		<div class="carousel-inner">
 	    	<div class="item active">
 	        	<img src="/assets/banner.jpg" alt="">
 	          	<div class="container">
-	          		<%= render 'layouts/header' %>
-	            	<div class="carousel-caption">
+	        	<div class="carousel-caption">
 	              		<div class="welcome">Welcome to BYT.</div>
 	              		<p class="lead">The small business Invoicing App.</p>
 	              		<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
