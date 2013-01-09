@@ -161,7 +161,7 @@ DEPENDENCIES
   annotate
   bcrypt-ruby
   bootstrap-datepicker-rails
-  bootstrap-sass (= 2.0.4)
+  bootstrap-sass
   bootstrap-will_paginate
   capybara
   coffee-rails (~> 3.2.1)
