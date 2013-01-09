@@ -21,7 +21,7 @@
 		Company:
 		<%= form_for :timesheet, :html => { :id => "select_company" }, url: { :action => "select_company" } do |f| %>			
 			<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
-	  		{onchange:  "this.form.submit();", class: "span3"} %>
+	  		{onchange:  "this.form.submit();", class: "span3 btn"} %>
 	  	<% end %>	  	
 	  	<hr />
 		<div class="row">	
@@ -29,7 +29,7 @@
 			Contractor:<br />			
 			<%= form_tag :action=>'select_contractor' do %>
 			<%= select_tag 'contractor', options_from_collection_for_select(@contractors, :id, :name, @contractor_id),
-	  		{class: "span3"} %>  		
+	  		{class: "span3  btn"} %>  		
 	  		<%= hidden_field_tag :company_id%>
 	  		</div>			
 			<div class="input-append date span3" id="dp1" data-date-format="mm-dd-yyyy">
@@ -115,7 +115,7 @@
 			  	  
 			  	  	  	  
 			      <%= g.label :project %>
-			      <%= collection_select :resource, :project_id, @projects, :id, :name, {}, {} %>
+			      <%= collection_select :resource, :project_id, @projects, :id, :name, {}, {class: "btn"} %>
 				  
 			      <%= g.label :description %>
 			      <%= g.text_area :description, :size => "10x5"  %>
