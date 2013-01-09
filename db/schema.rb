@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120926220436) do
+ActiveRecord::Schema.define(:version => 20130107035654) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -87,6 +87,19 @@ ActiveRecord::Schema.define(:version => 20120926220436) do
   end
 
   add_index "resources", ["project_id"], :name => "index_resources_on_project_id"
+
+  create_table "timesheets", :force => true do |t|
+    t.integer  "resource_id"
+    t.datetime "day"
+    t.integer  "time"
+    t.string   "description"
+    t.boolean  "overtime"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "status",      :default => 0
+  end
+
+  add_index "timesheets", ["resource_id"], :name => "index_timesheets_on_resource_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

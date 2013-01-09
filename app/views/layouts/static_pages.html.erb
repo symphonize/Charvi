@@ -2,7 +2,7 @@
 <html>
   <head>  	
     <title><%= full_title(yield(:title)) %></title>
-    <%= stylesheet_link_tag    "application", media: "all" %>
+    <%= stylesheet_link_tag "application", media: "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>    
@@ -21,7 +21,7 @@
 	        	<div class="carousel-caption">
 	              		<div class="welcome">Welcome to BYT.</div>
 	              		<p class="lead">The small business Invoicing App.</p>
-	              		<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+	              		<%= link_to raw("<i class='icon-user icon-white'></i> Sign up now!"), signup_path, class: "btn btn-large btn-primary" %>
 	            	</div>
 	          	</div>
 	        </div>

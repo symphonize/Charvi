@@ -6,6 +6,7 @@ gem 'bootstrap-sass', '2.0.4'
 gem 'bcrypt-ruby'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+gem 'bootstrap-datepicker-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
