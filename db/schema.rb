@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130114213310) do
+ActiveRecord::Schema.define(:version => 20130114224917) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -93,10 +93,10 @@ ActiveRecord::Schema.define(:version => 20130114213310) do
     t.integer  "time"
     t.string   "description"
     t.boolean  "overtime"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-    t.integer  "status",        :default => 0
-    t.date     "timesheet_day"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "status",      :default => 0
+    t.date     "day"
   end
 
   add_index "timesheets", ["resource_id"], :name => "index_timesheets_on_resource_id"
