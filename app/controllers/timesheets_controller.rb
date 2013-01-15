@@ -58,7 +58,7 @@ class TimesheetsController < ApplicationController
   
   def select_contractor
     
-     flash[:success] =  "Results for time submitted between " + params[:startDate]+" and " + params[:endDate]
+    flash[:info] =  "Results for time submitted between " + params[:startDate]+" and " + params[:endDate]
     @new_timesheet = Timesheet.new
     if user_companies != [] 
       @company_id = user_companies.first.id  
