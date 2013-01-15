@@ -57,6 +57,10 @@ class TimesheetsController < ApplicationController
   end
   
   def select_contractor
+    
+     flash[:success] =  params[:startDate]
+    
+    
     @new_timesheet = Timesheet.new
     if user_companies != [] 
       @company_id = user_companies.first.id  
@@ -64,7 +68,7 @@ class TimesheetsController < ApplicationController
         @contractors = user_companies.first.contractors
         @contractor_id =  params[:contractor]
         @projects = Project.joins(:resources).where(company_id: @company_id, 'resources.contractor_id' => @contractor_id).select("projects.name, resources.id")
-        @timesheet = Timesheet.joins(:resource).where('resources.contractor_id'=>@contractor_id).select("date(timesheets.day)as day, sum(timesheets.time)/60.0 as total_hours").group("date(day)").order("date(day) desc").limit(10)
+        @timesheet = Timesheet.joins(:resource).where('resources.contractor_id'=>@contractor_id, 'timesheets.day' => params[:startDate]..params[:endDate]).select("date(timesheets.day)as day, sum(timesheets.time)/60.0 as total_hours").group("date(day)").order("date(day) desc")
         @ts_detail = Timesheet.joins(:resource => :project).where('resources.contractor_id'=>@contractor_id).select("timesheets.id, date(timesheets.day) as day, timesheets.time/60.0 as time, timesheets.description, projects.name, timesheets.status")
       else
         @contractor_id = nil
