@@ -58,10 +58,7 @@ class TimesheetsController < ApplicationController
   
   def select_contractor
     
-     flash[:success] =  params[:startDate]
-    
-    
-    @new_timesheet = Timesheet.new
+     @new_timesheet = Timesheet.new
     if user_companies != [] 
       @company_id = user_companies.first.id  
       if(user_companies.first.contractors != [])   
