@@ -1,0 +1,9 @@
+<tr>
+	<td><%= contractor.name %></td>
+	<td><%= contractor.phone %></td>
+	<td><%= contractor.email %></td>
+	<td>
+		<%= link_to raw("<i class='icon-eye-open'></i> View"), contractor%> | 
+		<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_contractor_path(id: contractor.id)%>		
+	</td>
+</tr> 

@@ -1,0 +1,10 @@
+<tr>
+	<td><%= resource.contractor.name %></td>
+	<td><%= resource.billing_type %></td>
+	<td><%= resource.billing_amount %></td>
+	<td>
+		<%= link_to raw("<i class='icon-eye-open'></i> View"), resource%> | 
+		<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_resource_path(id: resource.id)%> 
+		
+	</td>
+</tr>

@@ -1,17 +1,13 @@
 <% provide(:title, 'Vendors') %>
 <div class="white-panel pad10">
 <h3>Vendors</h3>
-
-
-<%=@live%>
 <p>
-	<%= form_for :vendor, :url => { :action => "select_company" } do |f| %>
+	<%= form_for :vendor, remote: true, :html => { :id => "select_company" }, :url => { :action => "select_company" } do |f| %>
 		<%= link_to "Add new vendor", new_vendor_path, class: "btn btn-primary" %>
   		<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
-  		{onchange:  "this.form.submit();", class: "btn span5"} %>	
+  		{onchange:  "$('#select_company').submit();", class: "btn span5"} %>	
   	<% end %>
 </p>
-
 <table class="table table-hover table-bordered table-nonfluid">
 	<tr>
 		<th>Name</th>		
@@ -19,18 +15,9 @@
 		<th>Email</th>
 		<th></th>
 	</tr>
-  	<% @vendors.each do |vendor| %>
-  	<tr>
-  		<td><%= vendor.name %></td>
-  		<td><%= vendor.contact %></td>
-  		<td><%= vendor.email %></td>
-  		<td>
-  			<%= link_to raw("<i class='icon-eye-open'></i> View"), vendor%> | 
-  			<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_vendor_path(id: vendor.id)%> 
-  			
-		</td>
-  	</tr>
-  <% end %>
+	<tbody id="vendors">		
+		<%= render @vendors %>
+	</tbody>
 </table>
   
 </div>

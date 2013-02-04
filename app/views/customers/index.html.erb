@@ -2,10 +2,10 @@
 <div class="white-panel pad10">
 <h3>Customers</h3>
 <p>
-	<%= form_for :customer, :url => { :action => "select_company" } do |f| %>
+	<%= form_for :customer, remote: true, :html => { :id => "select_company" }, :url => { :action => "select_company" } do |f| %>
 		<%= link_to "Add new customer", new_customer_path, class: "btn btn-primary" %>
   		<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
-  		{onchange:  "this.form.submit();", class: "btn span5"} %>	
+  		{onchange:  "$('#select_company').submit();", class: "btn span5"} %>	
   	<% end %>
 </p>
 
@@ -16,18 +16,9 @@
 		<th>Email</th>
 		<th></th>
 	</tr>
-  	<% @customers.each do |customer| %>
-  	<tr>
-  		<td><%= customer.name %></td>
-  		<td><%= customer.contact %></td>
-  		<td><%= customer.email %></td>
-  		<td>
-  			<%= link_to raw("<i class='icon-eye-open'></i> View"), customer%> | 
-  			<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_customer_path(id: customer.id)%> 
-  			
-		</td>
-  	</tr>
-  <% end %>
+  	<tbody id="customers">
+  		<%= render @customers%>
+  	</tbody>
 </table>
 </div>
 

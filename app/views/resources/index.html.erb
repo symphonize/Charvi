@@ -9,16 +9,15 @@
 <% provide(:title, 'Resources') %>
 <div class="white-panel pad10">
 <h3>Resources</h3>
-
 <%= @error %>
 <p>
 	<%= form_for :resource, :html => { :id => "select_company" }, url: { :action => "select_company" } do |f| %>
 		<%= link_to "Add new resource", new_resource_path, class: "btn btn-primary" %>
   		<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
-  		{onchange:  "this.form.submit();", class: "btn span3"} %>
-  	<% end %>
+  		{onchange:  "$('#select_company').submit();", class: "btn span3"} %>
+	<% end %>
   	Project:
-  	<%= form_for :resource, :html => { :id => "select_project" }, url: { :action => "select_project" } do |f| %>
+  	<%= form_for :resource, :html => { :id => "select_project" }, remote: true, url: { :action => "select_project" } do |f| %>
 		<%= select_tag 'project', options_from_collection_for_select(@projects, :id, :name, @project_id),
   		{onchange:  "project_change();", class: "btn span3"} %>  		
   		<%= f.hidden_field :company_id%>
@@ -26,25 +25,14 @@
 </p>
 <table class="table table-hover table-bordered table-nonfluid">
 	<tr>
-		<th>Project</th>
 		<th>Resource</th>		
 		<th>Billing</th>
 		<th>Rate</th>		
 		<th></th>
 	</tr>
-  	<% @resources.each do |resource| %>
-  	<tr>
-  		<td><%= resource.project.name %></td>
-  		<td><%= resource.contractor.name %></td>
-  		<td><%= resource.billing_type %></td>
-  		<td><%= resource.billing_amount %></td>
-  		<td>
-  			<%= link_to raw("<i class='icon-eye-open'></i> View"), resource%> | 
-  			<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_resource_path(id: resource.id)%> 
-  			
-		</td>
-  	</tr>
-  <% end %>
+	<tbody id="resources">
+		<%= render @resources %>
+	</tbody>
 </table>
 </div>
   

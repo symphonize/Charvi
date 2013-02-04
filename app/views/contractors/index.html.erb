@@ -1,17 +1,14 @@
 <% provide(:title, 'Contractors') %>
 <div class="white-panel pad10">
 <h3>Contractors</h3>
-
-
 <%=@live%>
 <p>
-	<%= form_for :contractor, :url => { :action => "select_company" } do |f| %>
+	<%= form_for :contractor, remote: true, :html => { :id => "select_company" }, :url => { :action => "select_company" } do |f| %>
 		<%= link_to "Add new contractor", new_contractor_path, class: "btn btn-primary" %>
   		<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
-  		{onchange:  "this.form.submit();", class: "btn span5"} %>	
+  		{onchange:  "$('#select_company').submit();", class: "btn span5"} %>	
   	<% end %>
 </p>
-
 <table class="table table-hover table-bordered table-nonfluid">
 	<tr>
 		<th>Name</th>		
@@ -19,18 +16,8 @@
 		<th>Email</th>
 		<th></th>
 	</tr>
-  	<% @contractors.each do |contractor| %>
-  	<tr>
-  		<td><%= contractor.name %></td>
-  		<td><%= contractor.phone %></td>
-  		<td><%= contractor.email %></td>
-  		<td>
-  			<%= link_to raw("<i class='icon-eye-open'></i> View"), contractor%> | 
-  			<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_contractor_path(id: contractor.id)%> 
-  			
-		</td>
-  	</tr>
-  <% end %>
-</table>
-  
+	<tbody id="contractors">	
+  		<%=render @contractors%>
+  	</tbody>
+</table>  
 </div>

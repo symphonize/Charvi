@@ -1,0 +1,11 @@
+<tr>
+	<td><%= vendor.name %></td>
+	<td><%= vendor.contact %></td>
+	<td><%= vendor.email %></td>
+	<td>
+		<%= link_to raw("<i class='icon-eye-open'></i> View"), vendor%> | 
+		<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_vendor_path(id: vendor.id)%> 
+		
+	</td>
+</tr>
+  
