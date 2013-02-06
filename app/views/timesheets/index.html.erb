@@ -1,22 +1,41 @@
 <% content_for :head do %>
   <script type="text/javascript">
-  	$(function(){  		
-  		
-		$('#dp1').datepicker()
-				.on('changeDate', function(ev){					
-					$('#dp1').datepicker('hide');
-				});
-			$('#dp2').datepicker()
-				.on('changeDate', function(ev){					
-					$('#dp2').datepicker('hide');
-				});
-				$('#dp3').datepicker().on('changeDate', function(ev){					
-					$('#dp3').datepicker('hide');
-				});
-	});
+    $(function(){
+	  $('#dp1').datepicker()
+        .on('changeDate', function(ev){         
+          $('#dp1').datepicker('hide');
+        });
+      $('#dp2').datepicker()
+        .on('changeDate', function(ev){         
+          $('#dp2').datepicker('hide');
+        });
+        var myDate = new Date();
+		var prettyDate =myDate.getFullYear() + '-' + (myDate.getMonth()+1) + '-' + myDate.getDate();
+        $('#dp3').datepicker('setValue', prettyDate);
+        $('#dp3').datepicker().on('changeDate', function(ev){         
+          $('#dp3').datepicker('hide');
+        });
+  	});  
+    function contractor_change(){
+    	$('input#contractor_company_id').val($('#company').val());
+    	$('#select_contractor').submit();
+    	return false;
+    }    
+    function get_time(){
+    	$('input#time_company_id').val($('#company').val());
+    	$('input#time_contractor_id').val($('#contractor').val());
+    	
+    	if($('#startDate').val() != '' && $('#endDate').val() != '')
+    		$('#get_time').submit();
+    	return false;
+    } 
+    function add_new_time(){
+    	$('input#new_time_company_id').val($('#company').val());
+    	$('input#new_time_contractor_id').val($('#contractor').val());
+    	$('#add_new_time').submit();
+    } 
   </script>
 <% end %>
-
 <% provide(:title, 'Timesheet') %>
 <div class="white-panel pad10">
 	<h3>Timesheet</h3>
@@ -26,16 +45,18 @@
 		<%= form_for :timesheet, :html => { :id => "select_company" }, url: { :action => "select_company" } do |f| %>			
 			<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
 	  		{onchange:  "this.form.submit();", class: "span3 btn"} %>
-	  	<% end %>	  	
-	  	<hr />
-		<div class="row">	
-			<div class="span12">		
-			Contractor:<br />			
-			<%= form_tag :action=>'select_contractor' do %>
+	  	<% end %>
+	  	Contractor:			
+		<%= form_for :timesheet, :url =>  {:action=>'select_contractor'}, :html=> { :id => "select_contractor"} do %>
 			<%= select_tag 'contractor', options_from_collection_for_select(@contractors, :id, :name, @contractor_id),
-	  		{class: "span3  btn"} %>  		
-	  		<%= hidden_field_tag :company_id%>
-	  		</div>			
+  			{onchange:  "contractor_change();", class: "span3 btn"} %>	  	
+  		  	<%= hidden_field_tag :contractor_company_id%>
+	  	<% end %>
+	  	<hr />
+		<div class="row">
+			<%= form_for :timesheet, :url =>  {:action=>'get_time'}, :html=> {:id => "get_time"}, remote: true  do |h| %>
+	  		<%= hidden_field_tag :time_company_id%>
+	  		<%= hidden_field_tag :time_contractor_id%>
 			<div class="input-append date span3" id="dp1" data-date-format="yyyy-mm-dd">
 				Start Date:<br />	
 				<%= text_field_tag 'startDate', '', {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
@@ -46,7 +67,8 @@
 			</div>
 			<div class="span3">
 				<br />
-				<%= submit_tag "Get Time", class: "btn btn-primary", :name => nil %>				
+				
+				<%= button_tag "Get Time", class: "btn btn-primary", :name => nil, :onclick=> 'get_time();return false;' %>				
 			</div>
 			<% end %>				
 		</div>
@@ -60,47 +82,9 @@
 				<th>Total Hours</th>		
 				<th></th>
 			</tr>
-			<%	@timesheet.each_with_index do |time, index| %>
-		  	<tr>
-		  		<td><%= time.day.strftime("%m/%d/%Y") %></td>
-		  		<td><%= number_with_precision(time.total_hours, :precision=>1) %></td>
-		  		<td>
-		  			<button type="button" class="btn btn-success" data-toggle="collapse" data-target="<%= '#div'+ index.to_s %>" rel="tooltip" title="expand/collapse">
-  						<i class="icon-plus icon-white"></i><stron>/</stron><i class="icon-minus icon-white"></i>
-					</button>
-		  		</td>
-		  	</tr>
-		  	<tr>		  		
-		  		<td colspan="3" style="padding:0px;">
-		  			<div id="<%= "div"+ index.to_s %>" class="collapse">
-		  							<div class="pad10">
-		  				<table class="table table-hover table-bordered table-nonfluid">
-							<tr>
-								<th></th>				
-								<th>Description</th>		
-								<th>Project</th>
-								<th>Hours</th>
-								<th>Status</th>
-								<th></th>
-							</tr>
-							<%	@ts_detail.where(day: time.day).each do |time_detail| %>
-							<tr>
-								
-						  		<td></td>
-						  		<td><%= time_detail.description %></td>
-						  		<td><%= time_detail.name %></td>
-						  		<td><%= number_with_precision(time_detail.time, :precision=>1) %></td>
-						  		<td><%= time_detail.status %></td>
-						  		<td></td>
-					  		</tr>
-							<% end %>  		
-				  		</table>
-				  		</div>
-		  	
-		  			</div>
-	  			</td>
-		  	</tr>
-		  <% end %>
+			<tbody id="timesheet">
+				<%= render @timesheets %>
+			</tbody>
 		</table>
 		<!-- Modal -->
 		<div id="myModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -108,33 +92,7 @@
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		    <h3 id="myModalLabel">Add time</h3>
 		  </div>
-		  <%= form_for :new_timesheet, url: { :action => "add_new_time" } do |g| %>
-		  
-		  <div class="modal-body">
-		    
-		    <div class="row">
-			  <div class="span5">
-			  	  <%= render 'shared/error_messages', object: @new_timesheet %>	  	  
-			      <%= g.label :project %>
-			      <%= collection_select :new_timesheet, :resource_id, @projects, :id, :name, {}, {} %>
-		      	  <%= g.label :day %>
-			      <div class="input-append date" id="dp3" data-date-format="yyyy-mm-dd">			      
-			      	<%= g.text_field :day, :class=>"span2", :size=> 16, :readonly =>true%><span class="add-on"><i class="icon-calendar"></i></span>
-            	  </div>
-			      <%= g.label :description %>
-			      <%= g.text_area :description, :size => "10x5"  %>
-			      <%= g.label :time %>
-			      <div class="input-append">
-                    <%= g.text_field :time, :class=>'span1'%><span class="add-on"><i class="icon-time"></i></span>
-                </div>               
-			  </div>
-			</div>
-		  </div>
-		  <div class="modal-footer">
-		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-		    <%= g.submit "Add", class: "btn btn-primary", html:{id: "btnSubmit"} %>
-		  </div>
-		  <% end %>
+		  <%= render partial: 'form'%>
 		</div>
 		
 	</div>

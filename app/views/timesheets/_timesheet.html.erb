@@ -1,0 +1,38 @@
+<tr>
+	<td><%= timesheet.day.strftime("%m/%d/%Y") %></td>
+	<td><%= number_with_precision(timesheet.total_hours, :precision=>2) %></td>
+	<td>
+		<button type="button" class="btn btn-success" data-toggle="collapse" data-target="<%= '#div'+ timesheet_counter.to_s %>" rel="tooltip" title="expand/collapse">
+			<i class="icon-plus icon-white"></i><stron>/</stron><i class="icon-minus icon-white"></i>
+		</button>
+	</td>
+</tr>
+<tr>		  		
+	<td colspan="3" style="padding:0px;">
+		<div id="<%= "div"+ timesheet_counter.to_s %>" class="collapse">
+			<div class="pad10">
+  				<table class="table table-hover table-bordered table-nonfluid">
+					<tr>
+						<th></th>				
+						<th>Description</th>		
+						<th>Project</th>
+						<th>Hours</th>
+						<th>Status</th>
+						<th></th>
+					</tr>
+					<%	@ts_detail.where(day: timesheet.day).each do |time_detail| %>
+					<tr>						
+				  		<td><%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_timesheet_path(id: time_detail.id)%></td>
+				  		<td><%= time_detail.description %></td>
+				  		<td><%= time_detail.name %></td>
+				  		<td><%= number_with_precision(time_detail.time_hour, :precision=>2) %></td>
+				  		<td><%= time_detail.status %></td>
+				  		<td><%= link_to raw("<i class='icon-trash'></i> Delete"), timesheets_path(time_detail.id), :confirm => 'Are you sure you want to delete?', :method => :delete %></td>
+			  		</tr>
+					<% end %>  		
+		  		</table>
+	  		</div>
+		</div>
+	</td>
+</tr>
+

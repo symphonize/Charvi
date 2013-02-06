@@ -11,9 +11,9 @@ Charvi::Application.routes.draw do
   match '/resources/edit/:id/company', to: 'resources#select_company_edit'
   match '/timesheets/company', to: 'timesheets#select_company'
   match '/timesheets/contractor', to: 'timesheets#select_contractor'
-  match '/timeshets/AddTime', to:  'timesheets#add_new_time'
+  match '/timesheets/time', to: 'timesheets#get_time'
+  match '/timesheets/AddTime', to:  'timesheets#add_new_time'
   
-
   resources :sessions, only: [:new, :create, :destroy]
   
   match '/signup',  to: 'users#new'
