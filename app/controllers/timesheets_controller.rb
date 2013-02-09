@@ -28,6 +28,11 @@ class TimesheetsController < ApplicationController
     end        
   end
   
+  def destroy
+    redirect_t action: 'index'
+  end
+  
+  
     def select_company
     @company_id = params[:company]
     @timesheet = Timesheet.new

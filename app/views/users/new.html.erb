@@ -1,25 +1,23 @@
-<% provide(:title, 'Sign up') %>
+<% provide(:title, 'Add new user') %>
 <div class="white-panel pad10">
-<h3>Sign up</h3>
-
-<div class="row">
-  <div class="span6">
-    <%= form_for(@user) do |f| %>
-	  <%= render 'shared/error_messages', object: @user %>
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-
-      <%= f.label :email %>
-      <%= f.text_field :email %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password %>
-
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation %>
-
-      <%= f.submit "Create my account", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-</div>
+	<h3>Add new user</h3>	
+	<div class="row">
+	  <div class="span6 pad10">
+	    <%= form_for(@user) do |f| %>
+		  <%= render 'shared/error_messages', object: @user %>
+	      <%= f.label :name %>
+	      <%= f.text_field :name %>
+	      <%= f.label :email %>
+	      <%= f.text_field :email %>
+		  <%= f.label :role %>
+	      <%= f.select :role, user_roles %>
+	      <%= f.label :password %>
+	      <%= f.password_field :password %>
+	      <%= f.label :password_confirmation, "Confirmation" %>
+	      <%= f.password_field :password_confirmation %>
+	      <%= f.submit "Add", class: "btn btn-primary" %>
+	      <%= link_to "View all users", users_path,  class: "btn" %>
+	    <% end %>
+	  </div>
+	</div>
 </div>

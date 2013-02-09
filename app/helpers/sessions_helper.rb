@@ -1,11 +1,20 @@
 module SessionsHelper
   def sign_in(user)
     cookies.permanent[:remember_token] = user.remember_token
+    session[:company_token] = user.company_token
     self.current_user = user
   end
   
   def signed_in?
     !current_user.nil?
+  end
+  
+  def is_admin?
+    current_user[:role] == "Admin"
+  end
+  
+  def is_owner?
+    current_user[:role] == "Owner"
   end
   
   def current_user=(user)
@@ -20,11 +29,6 @@ module SessionsHelper
     user == current_user
   end
   
-  def user_companies
-    @user_companies = current_user.companies.all
-  end
-  
-  
   def redirect_back_or(default)
     redirect_to(session[:return_to] || default)
     session.delete(:return_to)
@@ -38,5 +42,14 @@ module SessionsHelper
     self.current_user = nil
     cookies.delete(:remember_token)
   end
+    def company_token    
+    session[:company_token]
+  end
   
+  def user_roles
+    [
+      ['Contractor', 'Contractor'],
+      ['Owner', 'Owner']
+    ]
+  end
 end

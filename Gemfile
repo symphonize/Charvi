@@ -7,7 +7,7 @@ gem 'bcrypt-ruby'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'bootstrap-datepicker-rails'
-
+gem 'jquery-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -34,10 +34,13 @@ group :development, :test do
   gem "libnotify"
   gem "spork"
   gem "annotate"
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem "meta_request"
 end
 
 
-gem 'jquery-rails'
+
 
 
   

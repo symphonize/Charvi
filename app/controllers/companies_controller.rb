@@ -1,40 +1,64 @@
 class CompaniesController < ApplicationController
-  before_filter :signed_in_user
+  before_filter :signed_in_super_user, only: [:index, :edit, :update, :show]
   def index
-    @companies = current_user.companies.all  
+    if(is_owner?)
+      @companies = Company.where(company_token: company_token)
+    elsif(is_admin?)
+      @companies = Company.all
+    end
   end
   
   def show
-    @company = current_user.companies.find(params[:id])
+    if(is_owner?)
+      @company = Company.find_by_company_token(company_token)
+    elsif(is_admin?)
+      @company = Company.find(params[:id])
+    end
   end
   
   def edit
-    @company = current_user.companies.find(params[:id])
+    if(is_owner?)
+      @company = Company.find_by_company_token(company_token)
+    elsif(is_admin?)
+      @company = Company.find(params[:id])
+    end    
   end
 
   def new
     @company = Company.new
+    @company.users.build
   end
   
   def create
     @company = Company.new(params[:company])
-    @company.user_id = current_user.id
+    uuid = SecureRandom.uuid
+    @company[:company_token] = uuid    
     if @company.save
-      flash[:success] = "New company successfully added."
-      redirect_to @company
+      new_user = User.where("company_token = '" + uuid +"'").first
+      sign_in new_user
+      flash[:success] = "Welcome to BYT!"
+      redirect_to new_user
     else
       render 'new'
     end
   end
   
   def update
-    @company = current_user.companies.find(params[:id])
-    @company.user_id = current_user.id
-    if @company.update_attributes(params[:company])
-      flash.now[:success] = "Company updated"
-      render 'show'
+     if(is_owner?)
+      @company = Company.find_by_company_token(company_token)
+    elsif(is_admin?)
+      @company = Company.find(params[:id])
+    end
+    if(@company != nil)
+      if @company.update_attributes(params[:company])
+        flash.now[:success] = "Company updated"
+        render 'show'
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
+      flash[:warning] = ACCESS_FAILURE_WARNING
+      redirect_to action:'index'
     end
   end
 end

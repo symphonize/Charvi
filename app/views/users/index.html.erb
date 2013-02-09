@@ -1,17 +1,34 @@
-<% provide(:title, 'All users') %>
+<% provide(:title, 'Users') %>
 <div class="white-panel pad10">
-<h3>All users</h3>
-
-<%= will_paginate %>
-
-<ul class="users">
-  <% @users.each do |user| %>
-    <li>      
-      <%= link_to user.name, user %>  | <%=user.email%>
-    </li>    
-  <% end %>
-</ul>
-
-<%= will_paginate %>
-
+	<h3>Users</h3>
+	<div class="pad10">
+		<% if(is_admin?) %>
+		<p><%= link_to "Add new user", new_user_path, class: "btn btn-primary" %></p>
+		<% end %>
+		<table class="table table-hover table-bordered table-nonfluid">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Role</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<%= will_paginate %>
+			  	<% @users.each do |user| %>
+			  	<tr>
+			  		<td><%= user.name %></td>
+			  		<td><%= user.email %></td>
+			  		<td><%= user.role %></td>
+			  		<td>
+			  			<%= link_to raw("<i class='icon-eye-open'></i> View"), user %> | 
+			  			<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_user_path(id: user.id)%>
+					</td>
+			  	</tr>
+			  <% end %>
+			  <%= will_paginate %>
+		  </tbody>
+		</table>
+	</div>
 </div>

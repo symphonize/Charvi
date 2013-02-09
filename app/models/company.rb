@@ -14,31 +14,36 @@
 #  phone    :string(255)
 #  fax      :string(255)
 #  contact  :string(255)
+#  company_token   :uuid
 #  company_id      :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
 
 class Company < ActiveRecord::Base
-  attr_accessible :address1, :address2, :city, :contact, :email, :fax, :name, :phone, :state, :website, :zip
+  attr_accessible :address1, :address2, :city, :contact, :email, :fax, :name, :phone, :state, :website, :zip, :company_token, :user
   
-  belongs_to :user
-  
+  has_many :users, dependent: :destroy, foreign_key: 'company_token', primary_key: 'company_token'
+  accepts_nested_attributes_for :users  
   has_many :customers, dependent: :destroy
   has_many :contractors, dependent: :destroy
   has_many :vendors, dependent: :destroy
   has_many :projects, dependent: :destroy
 
-  before_save { |company| company.email = email.downcase }
+  before_save { |company| company.email = email.downcase unless company.email == nil }
   
   validates  :name, presence: true, length: {maximum: 70}
-  validates  :address1, presence: true, length: {maximum: 30}
-  validates  :city, presence: true, length: {maximum: 30}
-  validates  :state, presence: true, length: {maximum: 2}
-  validates  :zip, presence: true, length: {maximum: 10}
-  validates  :email, presence: true, length: {maximum: 320}, format: { with: VALID_EMAIL_REGEX }
+  validates  :address1, length: {maximum: 30}
+  validates  :city, length: {maximum: 30}
+  validates  :state, length: {maximum: 2}
+  validates  :zip, length: {maximum: 10}
+  validates  :email, allow_blank: true, length: {maximum: 320}, format: { with: VALID_EMAIL_REGEX }
   validates  :phone, presence: true, length: {maximum: 10}
   validates  :contact, presence: true, length: {maximum: 75}
-  validates :user_id, presence: true
   
+  def user=(user)   
+      user[:role] = 'Owner'
+      user[:name] = self.contact   
+      users.build(user)
+  end
 end

@@ -1,5 +1,5 @@
 class ContractorsController < ApplicationController
-  before_filter :signed_in_user
+  before_filter :signed_in_super_user
   
   def index    
     if user_companies != [] 

@@ -27,7 +27,7 @@
 				  		<td><%= time_detail.name %></td>
 				  		<td><%= number_with_precision(time_detail.time_hour, :precision=>2) %></td>
 				  		<td><%= time_detail.status %></td>
-				  		<td><%= link_to raw("<i class='icon-trash'></i> Delete"), timesheets_path(time_detail.id), :confirm => 'Are you sure you want to delete?', :method => :delete %></td>
+				  		<td><%= link_to raw("<i class='icon-trash'></i> Delete"), timesheets_path(time_detail), :confirm => 'Are you sure you want to delete?', :method => :delete %></td>
 			  		</tr>
 					<% end %>  		
 		  		</table>

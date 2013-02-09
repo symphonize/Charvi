@@ -1,34 +1,29 @@
 <% provide(:title, 'Companies') %>
 <div class="white-panel pad10">
 <h3>Companies</h3>
-
-<p>
-	<%= link_to "Add new company", new_company_path, class: "btn btn-primary" %>
-</p>
-
-<table class="table table-hover table-bordered table-nonfluid">
-	<thead>
-		<tr>
-			<th>Name</th>		
-			<th>Contact</th>
-			<th>Email</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-	  	<% @companies.each do |company| %>
-	  	<tr>
-	  		<td><%= company.name %></td>
-	  		<td><%= company.contact %></td>
-	  		<td><%= company.email %></td>
-	  		<td>
-	  			<%= link_to raw("<i class='icon-eye-open'></i> View"), company%> | 
-	  			<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_company_path(id: company.id)%> 
-	  			
-			</td>
-	  	</tr>
-	  <% end %>
-  </tbody>
-</table>
-  
+	<div class="pad10">
+		<table class="table table-hover table-bordered table-nonfluid">
+			<thead>
+				<tr>
+					<th>Name</th>		
+					<th>Contact</th>
+					<th>Email</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+			  	<% @companies.each do |company| %>
+			  	<tr>
+			  		<td><%= company.name %></td>
+			  		<td><%= company.contact %></td>
+			  		<td><%= company.email %></td>
+			  		<td>
+			  			<%= link_to raw("<i class='icon-eye-open'></i> View"), company%> | 
+			  			<%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_company_path(id: company.id)%>
+					</td>
+			  	</tr>
+			  <% end %>
+		  </tbody>
+		</table>
+	</div>
 </div>
