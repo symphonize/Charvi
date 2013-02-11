@@ -9,7 +9,7 @@ module SessionsHelper
     !current_user.nil?
   end
   
-  def is_manager
+  def is_manager?
     current_user[:role] == "Manager"
   end
   
