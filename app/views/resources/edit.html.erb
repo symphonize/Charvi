@@ -1,27 +1,22 @@
 <% provide(:title, 'Edit resource') %>
 <div class="white-panel pad10">
-<h3>Edit <%=@resource.contractor.name%></h3>
-
-<div class="row">
-  <div class="span5">
-  	  <%= render 'shared/error_messages', object: @resource %>
-	  <%= form_for :company, :html => { :id => "select_edit_company" }, url: { :action => "select_company_edit" } do |f| %>
-	  	<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
-  			{onchange: "$('#select_edit_company').submit();", class: "btn"} %>
-  	  <% end %>
-	  <%= form_for(@resource) do |g| %>	
-	  <%= g.label :project %>
-      <%= collection_select :resource, :project_id, @projects, :id, :name, {}, {} %>
-	  <%= g.label :contractor %>
-	  <%= collection_select :resource, :contractor_id, @contractors, :id, :name, {}, {} %>
-      <%= g.label :billing_type %>
-      <%= g.select :billing_type, billing_types %>
-      <%= g.label :billing_amount %>
-      <%= g.text_field :billing_amount %>  
-      
-      <%= g.submit "Update", class: "btn btn-primary" %>
-      <%= link_to "View all resources", resources_path,  class: "btn" %>
-    <% end %>
-  </div>
-</div>
+	<h3>Edit <%=@resource.contractor.name%></h3>
+	<div class="row pad10">
+	  <div class="span5">
+	  	  <%= render 'shared/error_messages', object: @resource %>	  
+		  <%= form_for(@resource) do |g| %>	
+		  <%= g.label :project %>
+	      <%= collection_select :resource, :project_id, @projects, :id, :name, {}, {} %>
+		  <%= g.label :contractor %>
+		  <%= collection_select :resource, :contractor_id, @contractors, :id, :name, {}, {} %>
+	      <%= g.label :billing_type %>
+	      <%= g.select :billing_type, billing_types %>
+	      <%= g.label :billing_amount %>
+	      <%= g.text_field :billing_amount %>  
+	      
+	      <%= g.submit "Update", class: "btn btn-primary" %>
+	      <%= link_to "View all resources", resources_path,  class: "btn" %>
+	    <% end %>
+	  </div>
+	</div>
 </div>

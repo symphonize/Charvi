@@ -1,30 +1,17 @@
 class VendorsController < ApplicationController
-  before_filter :signed_in_user
+  before_filter :signed_in_super_user
   
   def index 
-    if user_companies != [] 
-      @company_id = user_companies.first.id      
-      @vendors = Vendor.where(company_id: @company_id)
+    if company_token != nil
+      @vendors = Vendor.where(company_token: @company_token)
     else
-        @company_id =nil
         @vendors = []
     end
   end
   
-  def select_company
-    @company_id = params[:company]
-    if Company.where(id: @company_id, user_id: current_user.id) != []
-      @vendors = Vendor.where(company_id: @company_id)      
-    else
-        @company_id =nil
-        @vendors = []
-    end    
-    render 'index'
-  end
-  
   def show
-    if user_companies != []
-      @vendor = current_user.vendors.find_by_id(params[:id])
+    if company_token != nil
+      @vendor = Vendor.find_by_id_and_company_token(params[:id], company_token)
       if @vendor == nil
         flash[:warning] = ACCESS_FAILURE_WARNING
         redirect_to action:'index'  
@@ -36,8 +23,8 @@ class VendorsController < ApplicationController
   end
   
   def edit
-    if user_companies != []
-      @vendor = current_user.vendors.find_by_id(params[:id])
+    if company_token != nil
+      @vendor = Vendor.find_by_id_and_company_token(params[:id], company_token)
       if @vendor == nil
         flash[:warning] = ACCESS_FAILURE_WARNING
         redirect_to action:'index'      
@@ -49,7 +36,7 @@ class VendorsController < ApplicationController
   end
 
   def new
-    if(user_companies == [])
+    if(company_token == nil)
       flash[:warning] = NO_COMPANIES_WARNING
       redirect_to action:'index'
     else
@@ -59,21 +46,17 @@ class VendorsController < ApplicationController
   
   def create
     @vendor = Vendor.new(params[:vendor])  
-    if Company.where(id: @vendor.company_id, user_id: current_user.id) != []  
+    @vendor[:company_token] = company_token
       if @vendor.save
         flash[:success] = "New vendor successfully added."
         redirect_to @vendor
       else
         render 'new'
       end
-    else
-      flash[:warning] = ACCESS_FAILURE_WARNING
-      redirect_to action:'index'
-    end
   end
   
   def update
-    @vendor = current_user.vendors.find(params[:id])    
+    @vendor = Vendor.find_by_id_and_company_token(params[:id], company_token)    
     if @vendor.update_attributes(params[:vendor])
       flash.now[:success] = "Vendor updated"
       render 'show'

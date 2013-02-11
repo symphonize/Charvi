@@ -13,10 +13,12 @@
 #  role :string(255)
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :company_token, :role
+  attr_accessible :name, :email, :password, :password_confirmation, :company_token, :role, :project_id, :contractor_id
   has_secure_password
   
   belongs_to :company, foreign_key: 'company_token', primary_key: 'company_token'
+  belongs_to :projects
+  belongs_to :contractors
   
   has_many :customers, through: :companies
   has_many :contractors, through: :companies

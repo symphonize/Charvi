@@ -18,9 +18,18 @@ class ApplicationController < ActionController::Base
         end
     end
     
+    def signed_in_power_user
+      unless signed_in? && (is_admin? || is_owner? || is_manager)
+        store_location
+        redirect_to signin_url, notice: "Please sign in."
+        end
+    end
+    
     def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless current_user?(@user)
+      if(!is_admin? && !is_owner?)
+        @user = User.find(params[:id])
+        redirect_to(root_path) unless current_user?(@user)
+      end
     end
   
 end

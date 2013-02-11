@@ -15,22 +15,14 @@
         $('#dp3').datepicker().on('changeDate', function(ev){         
           $('#dp3').datepicker('hide');
         });
-  	});  
-    function contractor_change(){
-    	$('input#contractor_company_id').val($('#company').val());
-    	$('#select_contractor').submit();
-    	return false;
-    }    
-    function get_time(){
-    	$('input#time_company_id').val($('#company').val());
+  	});
+    function get_time(){    	
     	$('input#time_contractor_id').val($('#contractor').val());
-    	
     	if($('#startDate').val() != '' && $('#endDate').val() != '')
     		$('#get_time').submit();
     	return false;
     } 
-    function add_new_time(){
-    	$('input#new_time_company_id').val($('#company').val());
+    function add_new_time(){    	
     	$('input#new_time_contractor_id').val($('#contractor').val());
     	$('#add_new_time').submit();
     } 
@@ -41,21 +33,14 @@
 	<h3>Timesheet</h3>
 	<%= @error %>
 	<div class="pad10">
-		Company:
-		<%= form_for :timesheet, :html => { :id => "select_company" }, url: { :action => "select_company" } do |f| %>			
-			<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
-	  		{onchange:  "this.form.submit();", class: "span3 btn"} %>
-	  	<% end %>
 	  	Contractor:			
 		<%= form_for :timesheet, :url =>  {:action=>'select_contractor'}, :html=> { :id => "select_contractor"} do %>
 			<%= select_tag 'contractor', options_from_collection_for_select(@contractors, :id, :name, @contractor_id),
-  			{onchange:  "contractor_change();", class: "span3 btn"} %>	  	
-  		  	<%= hidden_field_tag :contractor_company_id%>
+  			{onchange:  "$('#select_contractor').submit();", class: "span3 btn"} %>
 	  	<% end %>
 	  	<hr />
 		<div class="row">
-			<%= form_for :timesheet, :url =>  {:action=>'get_time'}, :html=> {:id => "get_time"}, remote: true  do |h| %>
-	  		<%= hidden_field_tag :time_company_id%>
+			<%= form_for :timesheet, :url =>  {:action=>'get_time'}, :html=> {:id => "get_time"}, remote: true  do |h| %>	  		
 	  		<%= hidden_field_tag :time_contractor_id%>
 			<div class="input-append date span3" id="dp1" data-date-format="yyyy-mm-dd">
 				Start Date:<br />	

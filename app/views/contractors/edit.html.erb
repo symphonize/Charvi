@@ -2,15 +2,12 @@
 <div class="white-panel pad10">
 <h3>Edit <%=@contractor.name%></h3>
 
-<div class="row">
-  <div class="span5">
+<div class="row pad10">
+  <div class="row span5">
   	  <%= form_for(@contractor) do |f| %>
 	  <%= render 'shared/error_messages', object: @contractor %>
 	  
-	  <%= f.label :company %>
-      <%= collection_select :contractor, :company_id, user_companies, :id, :name, {}, {class: "btn"} %>
-		
-      <%= f.label :name %>
+	  <%= f.label :name %>
       <%= f.text_field :name %>
 
       <%= f.label :address1 %>

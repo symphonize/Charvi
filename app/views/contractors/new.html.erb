@@ -7,10 +7,7 @@
     <%= form_for(@contractor) do |f| %>
 	  <%= render 'shared/error_messages', object: @contractor %>
 	  
-	  <%= f.label :company %>
-      <%= collection_select :contractor, :company_id, user_companies, :id, :name, {}, {class: "btn"} %>
-	
-      <%= f.label :name %>
+	  <%= f.label :name %>
       <%= f.text_field :name %>
 
       <%= f.label :address1 %>

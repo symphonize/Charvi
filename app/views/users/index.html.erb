@@ -2,7 +2,7 @@
 <div class="white-panel pad10">
 	<h3>Users</h3>
 	<div class="pad10">
-		<% if(is_admin?) %>
+		<% if(is_admin? || is_owner?) %>
 		<p><%= link_to "Add new user", new_user_path, class: "btn btn-primary" %></p>
 		<% end %>
 		<table class="table table-hover table-bordered table-nonfluid">

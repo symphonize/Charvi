@@ -4,10 +4,10 @@ class Project < ActiveRecord::Base
   belongs_to :customer
   
   has_many :resources
+  has_many :users
   
   before_save { |project| project.email = email.downcase }
   
-  validates :company_id, presence: true
   validates :customer_id, presence: true
   
   validates  :name, presence: true, length: {maximum: 70}
@@ -15,6 +15,6 @@ class Project < ActiveRecord::Base
   validates  :phone, presence: true, length: {maximum: 10}
   validates  :manager, presence: true, length: {maximum: 75}
   
-  default_scope order: 'projects.company_id'
+  default_scope order: 'projects.company_token'
   
 end

@@ -48,14 +48,13 @@ class UsersController < ApplicationController
   def create
     if(is_admin? || is_owner?)
       @user = User.new(params[:user])    
-      if(user_roles.include?([@user[:role], @user[:role]]))    
-        @user[:company_token] = company_token
-        if @user.save
-          flash[:success] = "New user successfully created"
-          redirect_to @user
-        else
-          render 'new'
-        end
+      @user[:role] = "Owner" 
+      @user[:company_token] = company_token
+      if @user.save
+        flash[:success] = "New user successfully created"
+        redirect_to @user
+      else
+        render 'new'
       end
     else
       redirect_to root_url

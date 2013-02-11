@@ -25,9 +25,9 @@ class Company < ActiveRecord::Base
   
   has_many :users, dependent: :destroy, foreign_key: 'company_token', primary_key: 'company_token'
   accepts_nested_attributes_for :users  
-  has_many :customers, dependent: :destroy
-  has_many :contractors, dependent: :destroy
-  has_many :vendors, dependent: :destroy
+  has_many :customers, foreign_key: 'company_token', primary_key: 'company_token', dependent: :destroy
+  has_many :contractors, foreign_key: 'company_token', primary_key: 'company_token', dependent: :destroy
+  has_many :vendors, foreign_key: 'company_token', primary_key: 'company_token', dependent: :destroy
   has_many :projects, dependent: :destroy
 
   before_save { |company| company.email = email.downcase unless company.email == nil }

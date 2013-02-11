@@ -1,39 +1,28 @@
-<% content_for :head do %>
-  <script type="text/javascript">
-    function project_change(){
-    	$('input#resource_company_id').val($('#company').val());
-    	$('#select_project').submit();
-    }
-  </script>
-<% end %>
 <% provide(:title, 'Resources') %>
 <div class="white-panel pad10">
-<h3>Resources</h3>
-<%= @error %>
-<p>
-	<%= form_for :resource, :html => { :id => "select_company" }, url: { :action => "select_company" } do |f| %>
-		<%= link_to "Add new resource", new_resource_path, class: "btn btn-primary" %>
-  		<%= select_tag 'company', options_from_collection_for_select(user_companies, :id, :name, @company_id),
-  		{onchange:  "$('#select_company').submit();", class: "btn span3"} %>
-	<% end %>
-  	Project:
-  	<%= form_for :resource, :html => { :id => "select_project" }, remote: true, url: { :action => "select_project" } do |f| %>
-		<%= select_tag 'project', options_from_collection_for_select(@projects, :id, :name, @project_id),
-  		{onchange:  "project_change();", class: "btn span3"} %>  		
-  		<%= f.hidden_field :company_id%>
-  	<% end %>  	
-</p>
-<table class="table table-hover table-bordered table-nonfluid">
-	<tr>
-		<th>Resource</th>		
-		<th>Billing</th>
-		<th>Rate</th>		
-		<th></th>
-	</tr>
-	<tbody id="resources">
-		<%= render @resources %>
-	</tbody>
-</table>
+	<h3>Resources</h3>
+	<div class="pad10">
+		Project:
+	  	<%= form_for :resource, :html => { :id => "select_project" }, remote: true, url: { :action => "select_project" } do |f| %>
+			<%= select_tag 'project', options_from_collection_for_select(@projects, :id, :name, @project_id),
+	  		{onchange:  "$('#select_project').submit();", class: "btn span3"} %>
+	  	<% end %>
+	  	<hr />
+	  	<p>
+	  		<%= link_to "Add new resource", new_resource_path, class: "btn btn-primary" %>
+  		</p>
+		<table class="table table-hover table-bordered table-nonfluid">
+			<tr>
+				<th>Resource</th>		
+				<th>Billing</th>
+				<th>Rate</th>		
+				<th></th>
+			</tr>
+			<tbody id="resources">
+				<%= render @resources %>
+			</tbody>
+		</table>
+	</div>
 </div>
   
 

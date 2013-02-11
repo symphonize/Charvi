@@ -1,12 +1,9 @@
 class Vendor < ActiveRecord::Base
-  attr_accessible :address1, :address2, :city, :company_id, :contact, :email, :fax, :name, :phone, :state, :website, :zip
+  attr_accessible :address1, :address2, :city, :contact, :email, :fax, :name, :phone, :state, :website, :zip
 
-belongs_to :company
+belongs_to :company, foreign_key: 'company_token', primary_key: 'company_token'
 
   before_save { |vendor| vendor.email = email.downcase }
-
-  validates :company_id, presence: true
-  
   
   validates  :name, presence: true, length: {maximum: 70}
   validates  :address1, presence: true, length: {maximum: 30}
@@ -17,6 +14,6 @@ belongs_to :company
   validates  :phone, presence: true, length: {maximum: 10}
   validates  :contact, presence: true, length: {maximum: 75}
   
-  default_scope order: 'vendors.company_id'
+  default_scope order: 'vendors.company_token'
 end
 

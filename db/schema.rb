@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130209031650) do
+ActiveRecord::Schema.define(:version => 20130211003304) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -40,12 +40,10 @@ ActiveRecord::Schema.define(:version => 20130209031650) do
     t.string   "email"
     t.string   "phone"
     t.string   "fax"
-    t.integer  "company_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.string   "company_token", :limit => nil
   end
-
-  add_index "contractors", ["company_id"], :name => "index_contractors_on_company_id"
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -59,22 +57,20 @@ ActiveRecord::Schema.define(:version => 20130209031650) do
     t.string   "phone"
     t.string   "fax"
     t.string   "contact"
-    t.integer  "company_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.string   "company_token", :limit => nil
   end
-
-  add_index "customers", ["company_id"], :name => "index_customers_on_company_id"
 
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.string   "manager"
     t.string   "email"
     t.string   "phone"
-    t.integer  "company_id"
     t.integer  "customer_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.string   "company_token", :limit => nil
   end
 
   create_table "resources", :force => true do |t|
@@ -82,8 +78,9 @@ ActiveRecord::Schema.define(:version => 20130209031650) do
     t.integer  "contractor_id"
     t.integer  "billing_type"
     t.decimal  "billing_amount"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "company_token",  :limit => nil
   end
 
   add_index "resources", ["project_id"], :name => "index_resources_on_project_id"
@@ -93,10 +90,11 @@ ActiveRecord::Schema.define(:version => 20130209031650) do
     t.integer  "time"
     t.string   "description"
     t.boolean  "overtime"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-    t.integer  "status",      :default => 0
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.integer  "status",                       :default => 0
     t.date     "day"
+    t.string   "company_token", :limit => nil
   end
 
   add_index "timesheets", ["resource_id"], :name => "index_timesheets_on_resource_id"
@@ -110,6 +108,8 @@ ActiveRecord::Schema.define(:version => 20130209031650) do
     t.string   "remember_token"
     t.string   "role",                           :default => "Owner"
     t.string   "company_token",   :limit => nil
+    t.integer  "contractor_id"
+    t.integer  "project_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -127,11 +127,9 @@ ActiveRecord::Schema.define(:version => 20130209031650) do
     t.string   "fax"
     t.string   "website"
     t.string   "contact"
-    t.integer  "company_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.string   "company_token", :limit => nil
   end
-
-  add_index "vendors", ["company_id"], :name => "index_vendors_on_company_id"
 
 end

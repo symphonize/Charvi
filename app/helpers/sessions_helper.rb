@@ -9,6 +9,10 @@ module SessionsHelper
     !current_user.nil?
   end
   
+  def is_manager
+    current_user[:role] == "Manager"
+  end
+  
   def is_admin?
     current_user[:role] == "Admin"
   end
@@ -42,13 +46,15 @@ module SessionsHelper
     self.current_user = nil
     cookies.delete(:remember_token)
   end
-    def company_token    
+  
+  def company_token    
     session[:company_token]
   end
   
   def user_roles
     [
       ['Contractor', 'Contractor'],
+      ['Manager', 'Manager'],
       ['Owner', 'Owner']
     ]
   end
