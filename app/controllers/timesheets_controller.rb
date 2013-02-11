@@ -25,7 +25,7 @@ class TimesheetsController < ApplicationController
     @contractor_id = params[:contractor]
     load_contractors
     if(@contractors != [])
-      @projects = Project.joins(:resources).where(company_token: @company_token, 'resources.contractor_id' => @contractor_id).select("projects.name, resources.id")
+      @projects = Project.joins(:resources).where(company_token: company_token, 'resources.contractor_id' => @contractor_id).select("projects.name, resources.id")
       @timesheets = Timesheet.joins(:resource).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("date(timesheets.day)as day, sum(timesheets.time)/60.0 as total_hours").group("date(day)").order("date(day) desc").limit(10)
       @ts_detail = Timesheet.joins(:resource => :project).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("timesheets.id, date(timesheets.day) as day, timesheets.time/60.0 as time_hour, timesheets.description, projects.name, timesheets.status")
     else
