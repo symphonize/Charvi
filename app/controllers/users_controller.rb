@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     if is_admin?
       @users = User.paginate(page: params[:page])
     elsif is_owner?
-      @users = User.where("role != 'Admin'").paginate(page: params[:page])
+      @users = User.where(company_token: company_token).paginate(page: params[:page])
     else
       @users = User.where(id: current_user.id).paginate(page: params[:page])     
     end
