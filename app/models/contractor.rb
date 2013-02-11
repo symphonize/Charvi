@@ -1,5 +1,5 @@
 class Contractor < ActiveRecord::Base
-  attr_accessible :address1, :address2, :city, :email, :fax, :name, :phone, :state, :zip
+  attr_accessible :address1, :address2, :city, :email, :fax, :name, :phone, :state, :zip, :user
 
   belongs_to :company, foreign_key: 'company_token', primary_key: 'company_token'
   has_many :users
@@ -15,6 +15,12 @@ class Contractor < ActiveRecord::Base
   validates  :zip, presence: true, length: {maximum: 10}
   validates  :email, presence: true, length: {maximum: 320}, format: { with: VALID_EMAIL_REGEX }
   validates  :phone, presence: true, length: {maximum: 10}  
+  
+  def user=(user)   
+    user[:role] = 'Contractor'
+    user[:name] = self.name   
+    users.build(user)
+  end
   
   default_scope order: 'contractors.company_token'
 end

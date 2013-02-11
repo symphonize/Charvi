@@ -31,17 +31,14 @@ class ContractorsController < ApplicationController
   end
 
   def new
-     if(company_token == nil)
-      flash[:warning] = NO_COMPANIES_WARNING
-      redirect_to action:'index'
-    else
       @contractor = Contractor.new
-    end 
+      @contractor.users.build
   end
   
   def create
     @contractor = Contractor.new(params[:contractor])   
-    @contractor[:company_token] = company_token 
+    @contractor[:company_token] = company_token
+    @contractor[:email] = params[:contractor][:user][:email]
     if @contractor.save
       flash[:success] = "New contractor successfully added."
       redirect_to @contractor
