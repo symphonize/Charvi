@@ -31,5 +31,13 @@ class ApplicationController < ActionController::Base
         redirect_to(root_path) unless current_user?(@user)
       end
     end
+    
+    private
+    
+    def user_company_token
+      
+      @user_company_token ||= UserCompanyToken.new(company_token)
+    end
+    
   
 end

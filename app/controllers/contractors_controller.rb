@@ -38,6 +38,7 @@ class ContractorsController < ApplicationController
   def create
     @contractor = Contractor.new(params[:contractor])   
     @contractor[:company_token] = company_token
+    params[:contractor][:user][:company_token] = company_token
     @contractor[:email] = params[:contractor][:user][:email]
     if @contractor.save
       flash[:success] = "New contractor successfully added."
