@@ -11,5 +11,6 @@
 		  </nav>
 		  <%= link_to image_tag("poweredbysymphonize.jpg", alt: "Symphonize"), 'http://www.symphonize.net/' %>
 		  </p>
+		  <%= debug(params) if Rails.env.development? %>
 	  </div>
 </footer>
