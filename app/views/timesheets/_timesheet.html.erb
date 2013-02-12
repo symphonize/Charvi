@@ -2,7 +2,7 @@
 	<td><%= timesheet.day.strftime("%m/%d/%Y") %></td>
 	<td><%= number_with_precision(timesheet.total_hours, :precision=>2) %></td>
 	<td>
-		<button type="button" class="btn btn-success" onclick="$('#<%= 'tr'+ timesheet_counter.to_s %>').toggle();" rel="tooltip" title="expand/collapse">
+		<button type="button" class="btn btn-success" onclick="$('#<%= 'tr'+ timesheet_counter.to_s %>').animate({height:'toggle'});" rel="tooltip" title="expand/collapse">
 			<i class="icon-plus icon-white"></i><stron>/</stron><i class="icon-minus icon-white"></i>
 		</button>
 	</td>
