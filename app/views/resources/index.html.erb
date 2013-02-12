@@ -5,7 +5,7 @@
 		Project:
 	  	<%= form_for :resource, :html => { :id => "select_project" }, remote: true, url: { :action => "select_project" } do |f| %>
 			<%= select_tag 'project', options_from_collection_for_select(@projects, :id, :name, @project_id),
-	  		{onchange:  "$('#select_project').submit();", class: "btn span3"} %>
+	  		{onchange:  "$('#select_project').submit();", class: "span3"} %>
 	  	<% end %>
 	  	<hr />
 	  	<p>

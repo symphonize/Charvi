@@ -36,7 +36,7 @@
 	  	Contractor:			
 		<%= form_for :timesheet, :url =>  {:action=>'select_contractor'}, :html=> { :id => "select_contractor"} do %>
 			<%= select_tag 'contractor', options_from_collection_for_select(@contractors, :id, :name, @contractor_id),
-  			{onchange:  "$('#select_contractor').submit();", class: "span3 btn"} %>
+  			{onchange:  "$('#select_contractor').submit();", class: "span3"} %>
 	  	<% end %>
 	  	<hr />
 		<div class="row">
