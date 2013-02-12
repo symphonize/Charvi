@@ -17,7 +17,12 @@ class TimesheetsController < ApplicationController
   end
   
   def destroy
-    redirect_to action: 'index'
+    @timesheet = Timesheet.find_by_id_and_company_token(params[:id], company_token)
+    @contractor_id = @timesheet.resource.contractor_id
+    @timesheet.destroy
+    @timesheets = Timesheet.joins(:resource).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("date(timesheets.day)as day, sum(timesheets.time)/60.0 as total_hours").group("date(day)").order("date(day) desc").limit(10)
+    @ts_detail = Timesheet.joins(:resource => :project).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("timesheets.id, date(timesheets.day) as day, timesheets.time/60.0 as time_hour, timesheets.description, projects.name, timesheets.status")
+    render 'index'
   end
   
   def select_contractor    

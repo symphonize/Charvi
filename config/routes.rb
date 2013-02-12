@@ -1,25 +1,15 @@
 Charvi::Application.routes.draw do  
   resources :users, :companies, :customers, :contractors, :vendors, :projects, :resources, :timesheets  
 
-  match '/customers/filter', to: 'customers#select_company'
-  match '/contractors/filter', to: 'contractors#select_company'
-  match '/vendors/filter', to: 'vendors#select_company'
-  match '/projects/filter', to: 'projects#select_company'  
   match '/resources/project', to: 'resources#select_project'
-  match '/resources/company', to: 'resources#select_company'
-  match '/resources/new/company', to: 'resources#select_company_new'
-  match '/resources/edit/:id/company', to: 'resources#select_company_edit'
-  match '/timesheets/company', to: 'timesheets#select_company'
   match '/timesheets/contractor', to: 'timesheets#select_contractor'
   match '/timesheets/time', to: 'timesheets#get_time'
-  match '/timesheets/AddTime', to:  'timesheets#add_new_time'
-  
-  resources :sessions, only: [:new, :create, :destroy]
-  
+  match '/timesheets/AddTime', to:  'timesheets#add_new_time'  
+  resources :sessions, only: [:new, :create, :destroy]  
   match '/signup',  to: 'companies#new'
   match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy', via: :delete
-    
+  match '/signout', to: 'sessions#destroy', via: :delete    
+  
   root to: 'static_pages#home'
       
   match '/help',    to: 'static_pages#help'
