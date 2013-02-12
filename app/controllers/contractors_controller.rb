@@ -32,19 +32,45 @@ class ContractorsController < ApplicationController
 
   def new
       @contractor = Contractor.new
-      @contractor.users.build
+      if(params[:param] == "newuser")
+        @contractor.users.build
+        @users = nil
+      else
+        @contractor.users.build
+        @users = User.where(company_token: company_token, contractor_id: nil)
+      end
   end
   
   def create
     @contractor = Contractor.new(params[:contractor])   
-    @contractor[:company_token] = company_token
-    params[:contractor][:user][:company_token] = company_token
-    @contractor[:email] = params[:contractor][:user][:email]
-    if @contractor.save
-      flash[:success] = "New contractor successfully added."
-      redirect_to @contractor
+    @contractor[:company_token] = company_token    
+    contractor_user = User.find_by_id_and_company_token(params[:user_id], company_token)
+    if(contractor_user == nil)
+      if(params[:contractor][:user] == nil)
+        flash.now[:error] = "User required."
+        @users = User.where(company_token: company_token, contractor_id: nil)
+        render 'new'
+      else        
+        @contractor[:email] = params[:contractor][:user][:email]
+        if @contractor.save          
+            flash[:success] = "New contractor successfully added."
+            redirect_to @contractor
+        else
+          render 'new'
+        end
+      end
     else
-      render 'new'
+      @contractor[:email] = contractor_user.email
+      if @contractor.save
+        if contractor_user.update_attribute("contractor_id", @contractor.id)
+          flash[:success] = "New contractor successfully added."
+          redirect_to @contractor
+        else
+          render 'new'    
+        end
+      else
+        render 'new'
+      end
     end
   end
   

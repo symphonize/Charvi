@@ -22,14 +22,11 @@
 	      <%= f.label :fax %>
 	      <%= f.text_field :fax %>
 	      <hr />
-	      <%= f.fields_for @contractor.users do |user_form| %>
-			<%= user_form.label :email %>
-			<%= user_form.text_field :email %>
-			<%= user_form.label :password %>
-			<%= user_form.password_field :password %>
-			<%= user_form.label :password_confirmation, "Confirmation" %>      
-			<%= user_form.password_field :password_confirmation %>
-		  <%end%>
+	      <%if(@users == nil) %>
+  	  	  	<%= render 'contractor_new_user', :g => f %>
+  	  	  <% else %>
+  	  	  	<%= render 'contractor_existing_user', :h => f %>
+  	  	  <% end %>
 		  <br /><br />
 	      <%= f.submit "Add", class: "btn btn-primary" %>
 	      <%= link_to "View all contractor", contractors_path,  class: "btn" %>

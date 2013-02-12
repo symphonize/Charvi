@@ -22,8 +22,10 @@ class Contractor < ActiveRecord::Base
     users.build(user)
   end
   
-  def update_company_token    
-    users[0][:company_token] = self.company_token    
+  def update_company_token   
+    if(users != []) 
+      users[0][:company_token] = self.company_token
+    end    
   end
   
   default_scope order: 'contractors.company_token'

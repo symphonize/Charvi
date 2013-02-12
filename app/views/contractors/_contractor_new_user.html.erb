@@ -1,0 +1,8 @@
+<%= g.fields_for :users do |user_form| %>
+	<%= user_form.label :email %>
+	<%= user_form.text_field :email %>
+	<%= user_form.label :password %>
+	<%= user_form.password_field :password %>
+	<%= user_form.label :password_confirmation, "Confirmation" %>      
+	<%= user_form.password_field :password_confirmation %>
+<%end%>
