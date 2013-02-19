@@ -25,6 +25,10 @@
     function add_new_time(){    	
     	$('input#new_time_contractor_id').val($('#contractor').val());
     	$('#add_new_time').submit();
+    }
+    function update_time(){    	
+    	$('input#update_time_contractor_id').val($('#contractor').val());
+    	$('#update_time').submit();
     } 
   </script>
 <% end %>
@@ -34,7 +38,7 @@
 	<%= @error %>
 	<div class="pad10">
 	  	Contractor:			
-		<%= form_for :timesheet, :url =>  {:action=>'select_contractor'}, :html=> { :id => "select_contractor"} do %>
+		<%= form_tag timesheets_path, id: "select_contractor" do %>
 			<%= select_tag 'contractor', options_from_collection_for_select(@contractors, :id, :name, @contractor_id),
   			{onchange:  "$('#select_contractor').submit();", class: "span3"} %>
 	  	<% end %>
@@ -60,7 +64,7 @@
 		<hr />
 		<p>
 		<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Add time</a>
-		</p>
+		</p>		
 		<table class="table table-hover table-bordered">
 			<tr>
 				<th>Date</th>				
@@ -77,7 +81,18 @@
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		    <h3 id="myModalLabel">Add time</h3>
 		  </div>
-		  <%= render partial: 'form'%>
+		  <div id="formNew">
+		  	<%= render partial: 'form'%>
+		  </div>
+		</div>
+		<div id="updateModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3 id="updateModalLabel">Update time</h3>
+		  </div>
+		  <div id="formEdit">
+		  	<%= render partial: 'edit_form'%>
+		  </div>
 		</div>
 		
 	</div>

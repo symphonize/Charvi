@@ -1,0 +1,3 @@
+$("#formEdit").html("<%= escape_javascript(render(partial: 'edit_form')) %>");
+$("#id").val('<%= @timesheet.id %>');
+$('#updateModal').modal();

@@ -50,7 +50,7 @@ before_filter :signed_in_power_user
   end
   
   def update
-    @resource = Resource.find(params[:id])  
+    @resource = Resource.find_by_id_and_company_token(params[:id], company_token)  
     if @resource.update_attributes(params[:resource])
       flash.now[:success] = "Resource updated"
       render 'show'

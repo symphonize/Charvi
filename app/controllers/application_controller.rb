@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
   
+  WillPaginate.per_page = 10
+  
   protected
 
     def signed_in_user

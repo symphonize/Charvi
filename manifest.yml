@@ -1,0 +1,19 @@
+---
+applications:
+  .:
+    name: charvi
+    framework:
+      name: rails3
+      info:
+        mem: 256M
+        description: Rails Application
+        exec: 
+    infra: aws
+    url: charvi.aws.af.cm
+    mem: 2G
+    instances: 1
+    services:
+      charvi:
+        type: postgresql
+      postgressql-1deed:
+        type: postgresql

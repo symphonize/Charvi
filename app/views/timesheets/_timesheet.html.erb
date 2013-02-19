@@ -20,7 +20,7 @@
 			</tr>
 			<%	@ts_detail.where(day: timesheet.day).each do |time_detail| %>
 			<tr>						
-		  		<td><%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_timesheet_path(id: time_detail.id)%></td>
+		  		<td><%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_timesheet_path(id: time_detail.id), remote: true%></td>
 		  		<td><%= time_detail.description %></td>
 		  		<td><%= time_detail.name %></td>
 		  		<td><%= number_with_precision(time_detail.time_hour, :precision=>2) %></td>
@@ -31,4 +31,3 @@
   		</table>  		
 	</td>
 </tr>
-
