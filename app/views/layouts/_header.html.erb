@@ -1,4 +1,4 @@
-<header class="navbar navbar-inverse custom-head container">
+<header class="navbar navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
  	  <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
@@ -8,10 +8,10 @@
         <span class="icon-bar"></span>
       </a>
       <!-- Be sure to leave the brand out there if you want it shown -->
-      <%= link_to "BYT", root_path, class: "brand" %>
+      <%= link_to "BYT", root_path, {class: "brand", style: "padding-top:30px" } %>
  
       <!-- Everything you want hidden at 940px or less, place within here -->
-      <div class="nav-collapse">
+      <div class="nav-collapse"  style="height:65px;padding-top:20px">
         <!-- .nav, .navbar-search, .navbar-form, etc -->        
 	        <ul class="nav pull-right">
 	          <li><%= link_to "Home", root_path %></li>          

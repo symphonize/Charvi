@@ -46,25 +46,30 @@
 		<div class="row">
 			<%= form_for :timesheet, :url =>  {:action=>'get_time'}, :html=> {:id => "get_time"}, remote: true  do |h| %>	  		
 	  		<%= hidden_field_tag :time_contractor_id%>
-			<div class="input-append date span3" id="dp1" data-date-format="yyyy-mm-dd">
-				Start Date:<br />	
-				<%= text_field_tag 'startDate', '', {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+	  		<div class="span3">
+	  			Start Date:		  		
+				<div class="input-append date" id="dp1" data-date-format="yyyy-mm-dd">					
+					<%= text_field_tag 'startDate', '', {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+				</div>
 			</div>
-			<div class="input-append date span3" id="dp2" data-date-format="yyyy-mm-dd">
-				End Date:<br />	
-				<%= text_field_tag 'endDate', '', {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+			<div  class="span3">
+				End Date:
+				<div class="input-append date" id="dp2" data-date-format="yyyy-mm-dd">
+					<%= text_field_tag 'endDate', '', {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+				</div>
 			</div>
 			<div class="span3">
-				<br />				
 				<%= button_tag "Get Time", class: "btn btn-primary", :name => nil, :onclick=> 'get_time();return false;' %>
-				<%= button_tag "Print Time", class: "btn btn-primary", :name => nil %>
 			</div>
 			<% end %>
 		</div>
 		<hr />
 		<p>
-		<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Add time</a>
-		</p>		
+			<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Add time</a>
+		</p>	
+		<div id="wp1">
+				<%= render 'paginate' %>
+		</div>		
 		<table class="table table-hover table-bordered">
 			<tr>
 				<th>Date</th>				
@@ -75,6 +80,9 @@
 				<%= render @timesheets %>
 			</tbody>
 		</table>
+		<div id="wp2">
+				<%= render 'paginate' %>
+		</div>
 		<!-- Modal -->
 		<div id="myModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-header">

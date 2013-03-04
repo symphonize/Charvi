@@ -1,5 +1,5 @@
 Charvi::Application.routes.draw do  
-  resources :users, :companies, :customers, :contractors, :vendors, :projects, :resources, :timesheets  
+  resources :users, :companies, :customers, :contractors, :vendors, :projects, :resources  
 
   match '/resources/project', to: 'resources#select_project'
   
@@ -16,6 +16,7 @@ Charvi::Application.routes.draw do
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
   
+  resources :timesheets, only: [:index, :destroy, :edit]
   resources :sessions, only: [:new, :create, :destroy]
   root to: 'static_pages#home'
   
