@@ -31,9 +31,14 @@
     	$('#update_time').submit();
     } 
     
-  	$('.pagination a').attr('href', function() {
-  		alert('hi'); 
-  		$(this).prop('href').replace('/comments', location.pathname); 
+  	$(function() {
+	  $(".pagination a").live("click", function() {
+	  	alert('hi');
+	  	
+	    $(".pagination").html("Page is loading...");
+	    $.getScript(this.href);
+	    return false;
+	  });
 	});
     
   </script>
