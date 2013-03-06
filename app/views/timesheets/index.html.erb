@@ -30,6 +30,12 @@
     	$('input#update_time_contractor_id').val($('#contractor').val());
     	$('#update_time').submit();
     } 
+    
+  	$('.pagination a').attr('href', function() {
+  		alert('hi'); 
+  		$(this).prop('href').replace('/comments', location.pathname); 
+	});
+    
   </script>
 <% end %>
 <% provide(:title, 'Timesheet') %>
@@ -38,13 +44,13 @@
 	<%= @error %>
 	<div class="pad10">
 	  	Contractor:			
-		<%= form_for :timesheets, :url =>  {:action=>'select_contractor'}, :html=> { :id => "select_contractor"} do %>
+		<%= form_for :timesheets, :html=> { :id => "select_contractor", method: "get"} , remote: true do %>
 			<%= select_tag 'contractor', options_from_collection_for_select(@contractors, :id, :name, @contractor_id),
   			{onchange:  "$('#select_contractor').submit();", class: "span3"} %>
 	  	<% end %>
 	  	<hr />
 		<div class="row">
-			<%= form_for :timesheet, :url =>  {:action=>'get_time'}, :html=> {:id => "get_time"}, remote: true  do |h| %>	  		
+			<%= form_for :timesheets, :html=> {:id => "get_time", method: "get"}, remote: true  do |h| %>	  		
 	  		<%= hidden_field_tag :time_contractor_id%>
 	  		<div class="span3">
 	  			Start Date:		  		
@@ -59,6 +65,7 @@
 				</div>
 			</div>
 			<div class="span3">
+				<br />
 				<%= button_tag "Get Time", class: "btn btn-primary", :name => nil, :onclick=> 'get_time();return false;' %>
 			</div>
 			<% end %>

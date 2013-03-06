@@ -28,5 +28,5 @@ class Contractor < ActiveRecord::Base
     end    
   end
   
-  default_scope order: 'contractors.company_token'
+  default_scope order: 'contractors.name'
 end

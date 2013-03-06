@@ -1,1 +1,1 @@
-<%= will_paginate @timesheets %>
+<%= will_paginate @timesheets, :params => {:controller => "timesheets", :action => "index"} %>
