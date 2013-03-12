@@ -5,5 +5,8 @@ $('#startDate').val('');
 $('#endDate').val('');
 $("#wp1").html("<%= escape_javascript(render('paginate')) %>");
 $("#wp2").html("<%= escape_javascript(render('paginate')) %>");
+$("#formAdd").html("<%= escape_javascript(render(partial: 'form')) %>");
+$("#addTime").html("<%= escape_javascript(render(partial: 'add_time')) %>");
+
 
 

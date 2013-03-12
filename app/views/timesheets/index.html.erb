@@ -8,18 +8,11 @@
       $('#dp2').datepicker()
         .on('changeDate', function(ev){         
           $('#dp2').datepicker('hide');
-        });
-        var myDate = new Date();
-		var prettyDate =myDate.getFullYear() + '-' + (myDate.getMonth()+1) + '-' + myDate.getDate();
-        $('#dp3').datepicker('setValue', prettyDate);
-        $('#dp3').datepicker().on('changeDate', function(ev){         
-          $('#dp3').datepicker('hide');
-        });
+        });       
   	});
     function get_time(){    	
     	$('input#time_contractor_id').val($('#contractor').val());
-    	if($('#startDate').val() != '' && $('#endDate').val() != '')
-    		$('#get_time').submit();
+		$('#get_time').submit();
     	return false;
     } 
     function add_new_time(){    	
@@ -76,8 +69,8 @@
 			<% end %>
 		</div>
 		<hr />
-		<p>
-			<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Add time</a>
+		<p id="addTime">
+			<%= render 'add_time' %>
 		</p>	
 		<div id="wp1">
 				<%= render 'paginate' %>

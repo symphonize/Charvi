@@ -16,7 +16,7 @@ Charvi::Application.routes.draw do
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
   
-  resources :timesheets, only: [:index, :destroy, :edit]
+  resources :timesheets, only: [:index, :destroy, :edit, :new]
   resources :sessions, only: [:new, :create, :destroy]
   root to: 'static_pages#home'
   

@@ -8,19 +8,28 @@
     <%= render 'layouts/shim' %>    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= yield :head%>
+    <script type="text/javascript">
+   		jQuery(window).load(function() {
+  			$("#car-container").height($("#car-img").height());
+  			$("#car-caption").css('padding-bottom',$("#car-img").height()/2.8 + 'px');
+		});
+    	$(window).resize(function() {
+    		$("#car-container").height($("#car-img").height());
+    		$("#car-caption").css('padding-bottom',$("#car-img").height()/2.8 + 'px');
+		});
+    </script>
   </head>
-  <body>  	
-  	
-	<%= render 'layouts/header' %>
-  	<div id="myCarousel" class="carousel slide" style="margin-top:-20px">
+  <body>
+	<%= render 'layouts/header' %>		
+	<div id="myCarousel" class="carousel slide" style="margin-top:-20px">
 		<div class="carousel-inner">
 	    	<div class="item active">
-	        	<img src="/assets/banner.jpg" alt="">
-	          	<div class="container">
-	        	<div class="carousel-caption">
-	              		<div class="welcome">Welcome to BYT.</div>
-	              		<p class="lead">The small business Invoicing App.</p>
-	              		<%= link_to raw("<i class='icon-user icon-white'></i> Sign up now!"), signup_path, class: "btn btn-large btn-primary" %>
+	        	<img src="/assets/slide3.jpg" alt="" id="car-img">
+	          	<div class="container" id="car-container">
+	        		<div class="carousel-caption" id="car-caption">
+	              		<h1>Welcome to BYT.</h1>
+	              		<h2>The small business Invoicing App.</h2>
+	              		<a href="/signup" class="btn btn-large btn-primary"><i class="icon-user icon-white"></i> Sign up now!</a>
 	            	</div>
 	          	</div>
 	        </div>

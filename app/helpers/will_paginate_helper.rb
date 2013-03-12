@@ -30,7 +30,7 @@ module WillPaginateHelper
     end
     def html_container(html)
       tag(:div, tag(:ul, html), container_attributes)
-    end    
+    end
     def link(text, target, attributes = {})
       if target.is_a? Fixnum
         attributes[:rel] = rel_value(target)
@@ -41,9 +41,6 @@ module WillPaginateHelper
       classname = attributes[:class]
       attributes.delete(:classname)
       tag(:li, @template.link_to_function(text.to_s.html_safe, ajax_call, attributes), :class => classname)
-      
-      
-      
     end
   end
 

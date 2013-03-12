@@ -17,6 +17,9 @@ class TimesheetsController < ApplicationController
         if(params[:startDate] != '' && params[:endDate] != '')
           @timesheets = Timesheet.joins(:resource).where('resources.contractor_id'=>@contractor_id, company_token: company_token, 'timesheets.day' => params[:startDate]..params[:endDate]).select("date(timesheets.day)as day, sum(timesheets.time)/60.0 as total_hours").group("date(day)").order("date(day) desc").page(params[:page]).per_page(7)
           @ts_detail = Timesheet.joins(:resource => :project).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("timesheets.id, date(timesheets.day) as day, timesheets.time/60.0 as time_hour, timesheets.description, projects.name, timesheets.status")
+        else
+          @timesheets = Timesheet.joins(:resource).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("date(timesheets.day)as day, sum(timesheets.time)/60.0 as total_hours").group("date(day)").order("date(day) desc").page(params[:page]).per_page(7)
+          @ts_detail = Timesheet.joins({:resource => :project}).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("timesheets.id, date(timesheets.day) as day, timesheets.time/60.0 as time_hour, timesheets.description, projects.name, timesheets.status")
         end
       else      
         @timesheets = Timesheet.joins(:resource).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("date(timesheets.day)as day, sum(timesheets.time)/60.0 as total_hours").group("date(day)").order("date(day) desc").page(params[:page]).per_page(7)
@@ -36,9 +39,24 @@ class TimesheetsController < ApplicationController
     @timesheet.destroy
     @timesheets = Timesheet.joins(:resource).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("date(timesheets.day)as day, sum(timesheets.time)/60.0 as total_hours").group("date(day)").order("date(day) desc").page(params[:page]).per_page(7)
     @ts_detail = Timesheet.joins(:resource => :project).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("timesheets.id, date(timesheets.day) as day, timesheets.time/60.0 as time_hour, timesheets.description, projects.name, timesheets.status")
+    @projects = Project.joins(:resources).where(company_token: company_token, 'resources.contractor_id' => @contractor_id).select("projects.name, resources.id")
     render 'index'
   end
-  
+  def new
+    @timesheet = Timesheet.new
+    load_contractors
+    if(@contractors != [])
+      @contractor_id  = params[:contractor_id]
+      if(@contractor_id == nil)
+        @contractor_id =  @contractors.first.id
+      end
+      @projects = Project.joins(:resources).where(company_token: company_token, 'resources.contractor_id' => @contractor_id).select("projects.name, resources.id")
+      respond_to do |format|
+        format.html
+        format.js
+      end
+    end
+  end
   def add_new_time
     @timesheet = Timesheet.new(params[:timesheet])
     @timesheet[:company_token] = company_token
@@ -48,6 +66,7 @@ class TimesheetsController < ApplicationController
       if @timesheet.save
         @timesheets = Timesheet.joins(:resource).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("date(timesheets.day)as day, sum(timesheets.time)/60.0 as total_hours").group("date(day)").order("date(day) desc").page(params[:page]).per_page(7)
         @ts_detail = Timesheet.joins(:resource => :project).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("timesheets.id, date(timesheets.day) as day, timesheets.time/60.0 as time_hour, timesheets.description, projects.name, timesheets.status")
+        @projects = Project.joins(:resources).where(company_token: company_token, 'resources.contractor_id' => @contractor_id).select("projects.name, resources.id")
         render 'index'
       else      
         flash[:warning] = "Failed to add new time."
@@ -75,6 +94,7 @@ def update_time
       if @timesheet.update_attributes(params[:timesheet])
         @timesheets = Timesheet.joins(:resource).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("date(timesheets.day)as day, sum(timesheets.time)/60.0 as total_hours").group("date(day)").order("date(day) desc").page(params[:page]).per_page(7)
         @ts_detail = Timesheet.joins(:resource => :project).where('resources.contractor_id'=>@contractor_id, company_token: company_token).select("timesheets.id, date(timesheets.day) as day, timesheets.time/60.0 as time_hour, timesheets.description, projects.name, timesheets.status")
+        @projects = Project.joins(:resources).where(company_token: company_token, 'resources.contractor_id' => @contractor_id).select("projects.name, resources.id")
         render 'index'
       else      
         flash[:warning] = "Failed to update time."
