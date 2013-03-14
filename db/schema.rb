@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130211003304) do
+ActiveRecord::Schema.define(:version => 20130314063038) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -25,9 +25,10 @@ ActiveRecord::Schema.define(:version => 20130211003304) do
     t.string   "phone"
     t.string   "fax"
     t.string   "contact"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-    t.string   "company_token", :limit => nil
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.string   "company_token",    :limit => nil
+    t.integer  "invoice_sequence",                :default => 0
   end
 
   create_table "contractors", :force => true do |t|
@@ -60,6 +61,33 @@ ActiveRecord::Schema.define(:version => 20130211003304) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.string   "company_token", :limit => nil
+  end
+
+  create_table "invoice_details", :force => true do |t|
+    t.integer  "invoice_id"
+    t.integer  "contractor_id"
+    t.integer  "time"
+    t.decimal  "billing_amount"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "company_token",  :limit => nil
+  end
+
+  create_table "invoices", :force => true do |t|
+    t.string   "invoice_no"
+    t.integer  "customer_id"
+    t.string   "customer_contact"
+    t.string   "customer_address"
+    t.string   "company_contact"
+    t.string   "company_address"
+    t.date     "invoice_date"
+    t.date     "due_date"
+    t.decimal  "invoice_amount"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.string   "company_token",    :limit => nil
+    t.integer  "status"
+    t.integer  "invoice_sequence"
   end
 
   create_table "projects", :force => true do |t|

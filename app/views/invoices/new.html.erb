@@ -1,0 +1,38 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    $(function(){
+	  $('#dp1').datepicker()
+        .on('changeDate', function(ev){         
+          $('#dp1').datepicker('hide');
+        });
+      $('#dp2').datepicker()
+        .on('changeDate', function(ev){         
+          $('#dp2').datepicker('hide');
+        });       
+  	});
+  </script>
+<% end %>
+<% provide(:title, 'New invoice') %>
+<div class="white-panel pad10">
+<h3>New invoice</h3>
+
+<div class="row pad10">
+  <div class="span5">
+    <%= form_for(@invoice) do |f| %>
+	  <%= render 'shared/error_messages', object: @invoice %>
+	  <%= f.label :customer %>
+	  <%= collection_select :invoice, :customer_id, @customers, :id, :name, {}, {} %>
+      <%= f.label :invoice_date %>
+      <div class="input-append date" id="dp1" data-date-format="yyyy-mm-dd">
+      	<%= f.text_field :invoice_date, {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+	  </div>
+      <%= f.label :due_date %>
+      <div class="input-append date" id="dp2" data-date-format="yyyy-mm-dd">
+      	<%= f.text_field :due_date, {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+	  </div>
+      <%= f.submit "Create", class: "btn btn-primary" %>
+      <%= link_to "View all invoices", invoices_path,  class: "btn" %>
+    <% end %>
+  </div>
+</div>
+</div>

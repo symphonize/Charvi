@@ -1,5 +1,5 @@
 Charvi::Application.routes.draw do  
-  resources :users, :companies, :customers, :contractors, :vendors, :projects, :resources  
+  resources :users, :companies, :customers, :contractors, :vendors, :projects, :resources, :invoices  
 
   match '/resources/project', to: 'resources#select_project'
   

@@ -1,7 +1,8 @@
 class Customer < ActiveRecord::Base
   attr_accessible :address1, :address2, :city, :contact, :email, :fax, :name, :phone, :state, :website, :zip
   belongs_to :company, foreign_key: 'company_token', primary_key: 'company_token'
-  has_many :projects 
+  has_many :projects
+  has_many :invoices
   
   before_save { |customer| customer.email = email.downcase }
 

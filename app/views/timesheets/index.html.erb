@@ -22,18 +22,7 @@
     function update_time(){    	
     	$('input#update_time_contractor_id').val($('#contractor').val());
     	$('#update_time').submit();
-    } 
-    
-  	$(function() {
-	  $(".pagination a").live("click", function() {
-	  	alert('hi');
-	  	
-	    $(".pagination").html("Page is loading...");
-	    $.getScript(this.href);
-	    return false;
-	  });
-	});
-    
+    }
   </script>
 <% end %>
 <% provide(:title, 'Timesheet') %>
