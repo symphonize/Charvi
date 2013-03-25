@@ -8,31 +8,47 @@
       $('#dp2').datepicker()
         .on('changeDate', function(ev){         
           $('#dp2').datepicker('hide');
-        });       
+        });
+      $('#dp3').datepicker()
+        .on('changeDate', function(ev){         
+          $('#dp3').datepicker('hide');
+        });
+      $('#dp4').datepicker()
+        .on('changeDate', function(ev){         
+          $('#dp4').datepicker('hide');
+        });     
   	});
   </script>
 <% end %>
 <% provide(:title, 'New invoice') %>
 <div class="white-panel pad10">
-<h3>New invoice</h3>
-
-<div class="row pad10">
-  <div class="span5">
-    <%= form_for(@invoice) do |f| %>
-	  <%= render 'shared/error_messages', object: @invoice %>
-	  <%= f.label :customer %>
-	  <%= collection_select :invoice, :customer_id, @customers, :id, :name, {}, {} %>
-      <%= f.label :invoice_date %>
-      <div class="input-append date" id="dp1" data-date-format="yyyy-mm-dd">
-      	<%= f.text_field :invoice_date, {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+	<h3>New invoice</h3>
+	<div class="row pad10">
+	  <div class="span5">
+	    <%= form_for(@invoice) do |f| %>
+		  <%= render 'shared/error_messages', object: @invoice %>
+		  <%= f.label :customer %>
+		  <%= collection_select :invoice, :customer_id, @customers, :id, :name, {}, {} %>
+	      <%= f.label :invoice_date %>
+	      <div class="input-append date" id="dp1" data-date-format="yyyy-mm-dd">
+	      	<%= f.text_field :invoice_date, {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+		  </div>
+	      <%= f.label :due_date %>
+	      <div class="input-append date" id="dp2" data-date-format="yyyy-mm-dd">
+	      	<%= f.text_field :due_date, {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+		  </div>
+		  <%= f.label :start_date %>
+	      <div class="input-append date" id="dp3" data-date-format="yyyy-mm-dd">
+	      	<%= f.text_field :start_date, {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+		  </div>
+		  <%= f.label :end_date %>
+	      <div class="input-append date" id="dp4" data-date-format="yyyy-mm-dd">
+	      	<%= f.text_field :end_date, {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
+		  </div>
+		  <hr />
+	      <%= f.submit "Create", class: "btn btn-primary" %>
+	      <%= link_to "View all invoices", invoices_path,  class: "btn" %>
+	    <% end %>
 	  </div>
-      <%= f.label :due_date %>
-      <div class="input-append date" id="dp2" data-date-format="yyyy-mm-dd">
-      	<%= f.text_field :due_date, {:class=>"span2", :size=> 16, :readonly=> 'true'} %><span class="add-on"><i class="icon-calendar"></i></span>
-	  </div>
-      <%= f.submit "Create", class: "btn btn-primary" %>
-      <%= link_to "View all invoices", invoices_path,  class: "btn" %>
-    <% end %>
-  </div>
-</div>
+	</div>
 </div>

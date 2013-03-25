@@ -14,17 +14,21 @@ class InvoicesController < ApplicationController
   
   def create
     @invoice = Invoice.new(params[:invoice])
+    
+    
     @invoice[:company_token] = company_token
-    @invoice[:status] = 0
-    @invoice[:customer_address] = ''
+    @invoice[:status_code] = 'Created'
+    @invoice[:customer_address] = @invoice.customer.address1
     @invoice[:customer_contact] = ''
     @invoice[:company_address] = ''
     @invoice[:company_contact] = '' 
     @invoice[:invoice_amount] = 0
     if @invoice.save
       flash[:success] = "New customer successfully added."
-      redirect_to action:'index'
+      
+      redirect_to invoice_edit_path(@invoice.id)
     else
+      @customers = Customer.where(company_token: company_token)
       render 'new'
     end
   end
@@ -38,7 +42,8 @@ class InvoicesController < ApplicationController
   end
   
   def edit
-    
+    @invoice = Invoice.find_by_id_and_company_token(params[:id], company_token)
+    @customers = Customer.where(company_token: company_token)
   end
   
 end

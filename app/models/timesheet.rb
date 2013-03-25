@@ -6,8 +6,7 @@ class Timesheet < ActiveRecord::Base
   belongs_to :resource
   
   validates :resource_id, presence: true
-  validates :day, presence: true
-  
+  validates :day, presence: true  
   validates :hours, presence: true
   validates :minutes, presence: true
   
